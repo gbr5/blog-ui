@@ -81,7 +81,7 @@ export default function V3Page() {
 
               <div className="flex items-center gap-6 flex-wrap">
                 <Link
-                  href={`/editorial/${foundational.slug}`}
+                  href="/foundational/v3"
                   className="inline-flex items-center gap-2 border border-white/30 rounded-full px-6 py-2.5 text-[14px] font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
                 >
                   Ler o ensaio fundador

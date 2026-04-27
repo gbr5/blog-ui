@@ -177,7 +177,7 @@ export default async function V4PostPage({ params }: { params: Promise<{ slug: s
             {related.map((p, i) => (
               <li key={p.slug}>
                 <Link
-                  href={`/v4/${p.slug}`}
+                  href={p.featuredContext === "foundational" ? "/foundational/v4" : `/v4/${p.slug}`}
                   className="group flex items-start gap-5 py-4 border-b border-slate-100 hover:border-slate-200 transition-colors"
                 >
                   <span className="font-mono text-[12px] text-slate-300 leading-7 w-5 shrink-0 text-right">

@@ -83,7 +83,7 @@ export default function V2Page() {
                 </p>
                 <div className="flex items-center gap-4">
                   <Link
-                    href={`/editorial/${foundational.slug}`}
+                    href="/foundational/v2"
                     className="inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-2.5 text-[14px] font-medium text-brand-navy hover:bg-brand-gold-light transition-colors"
                   >
                     Ler o texto fundador

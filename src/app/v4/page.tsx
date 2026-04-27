@@ -60,7 +60,7 @@ export default function V4Page() {
             </p>
             <div className="flex items-center gap-5 text-[13px]">
               <Link
-                href={`/v4/${foundational.slug}`}
+                href="/foundational/v4"
                 className="font-medium text-brand-navy hover:text-brand-navy/70 transition-colors"
               >
                 Ler o texto fundador ↗

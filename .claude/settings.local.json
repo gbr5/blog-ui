@@ -7,7 +7,9 @@
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
       "Bash(vercel --prod)",
-      "WebFetch(domain:www.dominionarts.com.br)"
+      "WebFetch(domain:www.dominionarts.com.br)",
+      "Bash(grep -n \"href.*post\\\\.slug\\\\|href.*foundational\\\\.slug\\\\|href.*v1/\\\\`\\\\|href.*v2/\\\\`\\\\|href.*v3/\\\\`\\\\|href.*v4/\\\\`\\\\|editorial/\\\\${\" /Volumes/T7black/projects/blog-ui/src/app/v1/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v2/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v3/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v4/page.tsx)",
+      "Bash(grep -n \"href.*v2/\\\\${p\\\\|href.*v3/\\\\${p\\\\|href.*v4/\\\\${p\\\\|href.*v1/\\\\${p\" /Volumes/T7black/projects/blog-ui/src/app/v2/\\\\[slug\\\\]/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v3/\\\\[slug\\\\]/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v4/\\\\[slug\\\\]/page.tsx /Volumes/T7black/projects/blog-ui/src/app/v1/\\\\[slug\\\\]/page.tsx)"
     ]
   }
 }

@@ -62,7 +62,7 @@ export default function V1Page() {
         {/* Posts grid — 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-10">
           {posts.map((post) => (
-            <Link key={post.slug} href={`/v1/${post.slug}`}>
+            <Link key={post.slug} href={post.featuredContext === "foundational" ? "/foundational/v1" : `/v1/${post.slug}`}>
               <article className="group overflow-hidden rounded-2xl bg-white border border-slate-200/60 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-500 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
                 {/* Image */}
                 <div className="block aspect-[4/3] overflow-hidden bg-stone-100">

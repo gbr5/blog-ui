@@ -197,7 +197,7 @@ export default async function V2PostPage({ params }: { params: Promise<{ slug: s
             {related.map((p) => (
               <Link
                 key={p.slug}
-                href={`/v2/${p.slug}`}
+                href={p.featuredContext === "foundational" ? "/foundational/v2" : `/v2/${p.slug}`}
                 className="group flex flex-col gap-3 rounded-xl border border-slate-200 p-4 hover:border-brand-navy/15 hover:bg-slate-50/50 transition-all"
               >
                 <div className="overflow-hidden rounded-lg aspect-[3/2] bg-stone-100">

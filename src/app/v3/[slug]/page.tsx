@@ -173,7 +173,7 @@ export default async function V3PostPage({ params }: { params: Promise<{ slug: s
             {related.map((p) => (
               <Link
                 key={p.slug}
-                href={`/v3/${p.slug}`}
+                href={p.featuredContext === "foundational" ? "/foundational/v3" : `/v3/${p.slug}`}
                 className="group overflow-hidden rounded-xl bg-white border border-slate-200 hover:shadow-[0_6px_20px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-0.5"
               >
                 <div className="aspect-[3/2] overflow-hidden bg-stone-100">

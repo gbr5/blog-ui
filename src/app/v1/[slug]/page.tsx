@@ -138,7 +138,7 @@ export default async function V1PostPage({ params }: { params: Promise<{ slug: s
               {related.map((p) => (
                 <Link
                   key={p.slug}
-                  href={`/v1/${p.slug}`}
+                  href={p.featuredContext === "foundational" ? "/foundational/v1" : `/v1/${p.slug}`}
                   className="group flex gap-4 rounded-xl border border-slate-200 bg-white p-4 hover:border-brand-navy/20 hover:shadow-[0_4px_16px_rgba(15,23,42,0.07)] transition-all"
                 >
                   <div className="shrink-0 w-[72px] aspect-square overflow-hidden rounded-lg bg-stone-100">
