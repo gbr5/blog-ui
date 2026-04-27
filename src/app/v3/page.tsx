@@ -105,6 +105,7 @@ export default function V3Page() {
 
             <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:gap-8">
               {/* Large card */}
+              <Link href={`/v3/${firstFeatured.slug}`}>
               <article className="group overflow-hidden rounded-2xl border border-slate-200/60">
                 <div className="aspect-[16/9] overflow-hidden bg-stone-100">
                   <Image
@@ -133,12 +134,13 @@ export default function V3Page() {
                   </div>
                 </div>
               </article>
+              </Link>
 
               {/* Stacked smaller cards */}
               <div className="flex flex-col gap-4">
                 {restFeatured.map((post) => (
+                  <Link key={post.slug} href={`/v3/${post.slug}`}>
                   <article
-                    key={post.slug}
                     className="group flex gap-4 overflow-hidden rounded-xl border border-slate-200/60 p-4 hover:border-brand-navy/15 transition-all"
                   >
                     <div className="shrink-0 w-[90px] aspect-square overflow-hidden rounded-lg bg-stone-100">
@@ -160,6 +162,7 @@ export default function V3Page() {
                       <span className="text-[12px] text-slate-400">{formatDate(post.publishedAt)}</span>
                     </div>
                   </article>
+                  </Link>
                 ))}
 
                 {/* Category band */}
@@ -194,8 +197,8 @@ export default function V3Page() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-6">
             {gridPosts.map((post) => (
+              <Link key={post.slug} href={`/v3/${post.slug}`}>
               <article
-                key={post.slug}
                 className="group overflow-hidden rounded-xl border border-slate-200/60 bg-white hover:shadow-[0_6px_24px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-0.5"
               >
                 <div className="aspect-[3/2] overflow-hidden bg-stone-100">
@@ -220,6 +223,7 @@ export default function V3Page() {
                   <span className="text-[12px] text-slate-400">{formatDate(post.publishedAt)}</span>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
         </section>

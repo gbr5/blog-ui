@@ -109,8 +109,8 @@ export default function V2Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {featured.map((post) => (
+                <Link key={post.slug} href={`/v2/${post.slug}`}>
                 <article
-                  key={post.slug}
                   className="group flex flex-col overflow-hidden rounded-xl border border-slate-200/80 bg-white transition-all duration-300 hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:-translate-y-0.5"
                 >
                   <div className="aspect-[3/2] overflow-hidden bg-stone-100">
@@ -140,6 +140,7 @@ export default function V2Page() {
                     </div>
                   </div>
                 </article>
+                </Link>
               ))}
             </div>
           </section>
@@ -182,8 +183,8 @@ export default function V2Page() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-8">
             {latest.map((post) => (
+              <Link key={post.slug} href={`/v2/${post.slug}`}>
               <article
-                key={post.slug}
                 className="group flex gap-4 rounded-xl border border-slate-200/60 p-4 transition-all duration-200 hover:border-brand-navy/15 hover:bg-slate-50/50"
               >
                 {/* Thumbnail */}
@@ -211,6 +212,7 @@ export default function V2Page() {
                   <span className="text-[12px] text-slate-400">{formatDate(post.publishedAt)}</span>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
         </section>

@@ -60,7 +60,7 @@ export default function V4Page() {
             </p>
             <div className="flex items-center gap-5 text-[13px]">
               <Link
-                href={`/editorial/${foundational.slug}`}
+                href={`/v4/${foundational.slug}`}
                 className="font-medium text-brand-navy hover:text-brand-navy/70 transition-colors"
               >
                 Ler o texto fundador ↗
@@ -83,6 +83,7 @@ export default function V4Page() {
         <ol className="space-y-0">
           {rest.map((post, index) => (
             <li key={post.slug}>
+              <Link href={`/v4/${post.slug}`}>
               <article className="group flex gap-6 py-5 border-b border-slate-100 hover:border-slate-200 transition-colors">
                 {/* Number */}
                 <span
@@ -121,6 +122,7 @@ export default function V4Page() {
                   <span className="text-[18px] text-brand-gold">→</span>
                 </div>
               </article>
+              </Link>
             </li>
           ))}
         </ol>

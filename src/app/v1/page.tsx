@@ -62,44 +62,43 @@ export default function V1Page() {
         {/* Posts grid — 2 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-10">
           {posts.map((post) => (
-            <article
-              key={post.slug}
-              className="group overflow-hidden rounded-2xl bg-white border border-slate-200/60 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-500 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] hover:-translate-y-0.5"
-            >
-              {/* Image */}
-              <div className="block aspect-[4/3] overflow-hidden bg-stone-100">
-                <Image
-                  src={post.image ?? `https://picsum.photos/seed/${post.slug}/800/600`}
-                  alt={post.title}
-                  width={530}
-                  height={400}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-
-              {/* Text area */}
-              <div className="p-5 md:p-6">
-                <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-                  <span className="text-xs font-medium uppercase tracking-[0.08em] text-brand-gold">
-                    {CATEGORY_LABELS[post.category]}
-                  </span>
-                  <span className="text-slate-300">·</span>
-                  <span className="text-xs text-slate-400">{formatDate(post.publishedAt)}</span>
+            <Link key={post.slug} href={`/v1/${post.slug}`}>
+              <article className="group overflow-hidden rounded-2xl bg-white border border-slate-200/60 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-500 hover:shadow-[0_16px_40px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
+                {/* Image */}
+                <div className="block aspect-[4/3] overflow-hidden bg-stone-100">
+                  <Image
+                    src={post.image ?? `https://picsum.photos/seed/${post.slug}/800/600`}
+                    alt={post.title}
+                    width={530}
+                    height={400}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
                 </div>
 
-                <h3 className="mb-3 font-serif text-[22px] leading-tight tracking-[-0.02em] text-brand-navy group-hover:text-brand-navy/80 transition-colors">
-                  {post.title}
-                </h3>
+                {/* Text area */}
+                <div className="p-5 md:p-6">
+                  <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                    <span className="text-xs font-medium uppercase tracking-[0.08em] text-brand-gold">
+                      {CATEGORY_LABELS[post.category]}
+                    </span>
+                    <span className="text-slate-300">·</span>
+                    <span className="text-xs text-slate-400">{formatDate(post.publishedAt)}</span>
+                  </div>
 
-                <p className="mb-4 line-clamp-3 text-[15px] leading-7 text-slate-600">
-                  {post.excerpt}
-                </p>
+                  <h3 className="mb-3 font-serif text-[22px] leading-tight tracking-[-0.02em] text-brand-navy group-hover:text-brand-navy/80 transition-colors">
+                    {post.title}
+                  </h3>
 
-                <span className="text-[14px] font-medium text-brand-gold hover:text-brand-gold/80 transition-colors">
-                  Ler artigo →
-                </span>
-              </div>
-            </article>
+                  <p className="mb-4 line-clamp-3 text-[15px] leading-7 text-slate-600">
+                    {post.excerpt}
+                  </p>
+
+                  <span className="text-[14px] font-medium text-brand-gold hover:text-brand-gold/80 transition-colors">
+                    Ler artigo →
+                  </span>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </div>
