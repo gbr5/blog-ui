@@ -10,48 +10,68 @@ export const postContent: Record<string, ContentBlock[]> = {
   "dominio-e-arte-o-que-herdamos-moldamos-e-legamos": [
     {
       type: "lead",
-      text: "Há objetos que não existem apenas para ocupar espaço. Existem para lembrar o que somos — e o que escolhemos preservar.",
-    },
-    {
-      type: "paragraph",
-      text: "A palavra domínio carrega em si uma tensão produtiva. Não se trata apenas de posse, mas de compreensão profunda. Dominar uma arte, um ofício, um objeto — significa conhecer sua lógica interna, sua resistência, seu tempo próprio. É saber por que certos gestos funcionam e outros falham. É entender que cada material tem uma natureza que precede nossa intenção.",
-    },
-    {
-      type: "pullquote",
-      text: "Antes de ser ornamento, a arte foi gesto de orientação.",
-    },
-    {
-      type: "paragraph",
-      text: "O que chamamos de arte, na maior parte da história humana, não era separado da vida comum. Era a forma como as comunidades registravam o que importava — quem eram, de onde vinham, o que valorizavam. A separação entre arte e artesanato, entre obra e objeto, é relativamente recente. E essa separação tem um custo: nos distancia da experiência direta da matéria, do gesto, da presença física das coisas feitas com intenção.",
+      text: "DominionArts nasce da ideia de que prosperar é aprender a dar forma ao mundo sem romper o vínculo com a memória, a matéria e o tempo.",
     },
     {
       type: "heading",
-      text: "Matéria, técnica e tempo",
+      text: "Cultura material, arte e permanência",
     },
     {
       type: "paragraph",
-      text: "Um vaso de terracota com dois mil anos não é apenas um objeto antigo. É a evidência de um encontro entre um artesão, uma argila, um forno, e uma necessidade. Cada objeto duradouro carrega em si essa história: o encontro entre a intenção humana e a resistência do material. A técnica é o que media esse encontro — é o conhecimento acumulado de como dobrar o material à vontade sem quebrar sua essência.",
-    },
-    {
-      type: "note",
-      text: "Ars, technē, domínio: três palavras para uma mesma tensão entre matéria, gesto e permanência. A diferença entre elas revela mais sobre as culturas que as usaram do que sobre os objetos que descrevem.",
+      text: "Os objetos existem porque os seres humanos precisaram moldar a matéria como resposta a condições adversas. Antes de se tornar ornamento, a arte funcionou como técnica, disciplina, linguagem e tentativa de ordem diante de um mundo que nunca prometeu estabilidade.",
     },
     {
       type: "paragraph",
-      text: "A DominionArts nasceu dessa pergunta: o que significa colecionar com consciência? Não como acumulação de valor financeiro, mas como curadoria de memória material. Cada peça que entra em uma coleção traz consigo a história de quem a fez, de quem a usou, de quem a preservou. Colecionar, nesse sentido, é uma prática de atenção — uma recusa ao descartável, uma aposta na permanência.",
+      text: "A DominionArts nasce da convicção de que certos objetos representam a capacidade humana de transformar elementos brutos em forma, sentido e legado. Madeira, pedra, metal, fibra, pigmento, argila, tecido — esses materiais só chegam até nós como cultura porque alguém dominou o fogo, as ferramentas, a proporção e os limites.",
+    },
+    {
+      type: "pullquote",
+      text: "Domínio não é tirania. É competência. Um marinheiro domina o mar não eliminando as tempestades, mas aprendendo os ventos e os próprios limites.",
+    },
+    {
+      type: "heading",
+      text: "O que significa domínio quando falamos de cultura material",
+    },
+    {
+      type: "paragraph",
+      text: "A civilização avança quando os seres humanos convertem a incerteza em técnica e a vulnerabilidade em cultura. O fogo torna-se útil para aquecer, fundir, cozinhar e iluminar. A argila transforma-se em recipientes, azulejos, ídolos e vasilhas. O metal converte-se em ferramentas, símbolos, proteção e arquitetura.",
+    },
+    {
+      type: "paragraph",
+      text: "Na filosofia da DominionArts, o valor de uma peça não repousa apenas na idade, na raridade ou no efeito visual — mas no fato de ela condensar uma solução, uma história humana e uma forma de permanência. É isso que distingue um objeto de uma peça.",
+    },
+    {
+      type: "heading",
+      text: "Cultura, narrativa e prosperidade",
+    },
+    {
+      type: "paragraph",
+      text: "A cultura avançou pela transmissão de narrativas — religiosas, políticas, familiares, estéticas, civilizacionais — que uniram pessoas em torno de valores e referências compartilhadas. Essa transformação permitiu que comunidades dispersas se tornassem povos, e que povos se tornassem civilizações capazes de construir e legar.",
+    },
+    {
+      type: "pullquote",
+      text: "A cultura une, mas também fortalece. Ela permite a acumulação de conhecimento e abre para os seres humanos um mundo para além da sobrevivência.",
+    },
+    {
+      type: "paragraph",
+      text: "Essa evolução raramente ocorreu em isolamento. As sociedades aprenderam com vizinhos, predecessores e até rivais. Técnicas, formas e símbolos viajaram por rotas comerciais, conflitos e migrações. A necessidade acelerou o engenho humano, elevando a organização e o refinamento a patamares que o indivíduo isolado jamais alcançaria.",
+    },
+    {
+      type: "heading",
+      text: "Arte, design e objetos culturais",
+    },
+    {
+      type: "paragraph",
+      text: "A DominionArts considera as peças não como mero ornamento, mas como um ponto de encontro entre cultura e permanência. Valorizamos objetos que preservam densidade — obras que ainda comunicam, artefatos que ainda ensinam, designs que sustentam presença por seriedade formal, simbólica e cultural.",
+    },
+    {
+      type: "paragraph",
+      text: "O valor temporal não é sobre pertencer a nenhuma época, mas sobre aquilo que atravessa épocas sem perder sentido. Certas formas perduram porque tocam experiências humanas constantes: construir significado, habitar melhor, cercar-se do que merece permanecer.",
     },
     { type: "divider" },
     {
       type: "paragraph",
-      text: "O que herdamos não nos pertence completamente. Somos guardadores temporários de objetos que existiram antes de nós e que, se bem cuidados, existirão depois. Essa consciência muda a relação com os objetos — tira o peso da propriedade e adiciona o peso da responsabilidade. Não apenas \"o que isso vale?\" mas \"o que isso carrega?\" e \"para quem isso deve continuar?\"",
-    },
-    {
-      type: "pullquote",
-      text: "Legar é decidir o que merece continuar.",
-    },
-    {
-      type: "paragraph",
-      text: "Quando escolhemos um objeto com atenção — quando entendemos sua origem, sua técnica, sua trajetória — fazemos algo mais do que uma aquisição. Participamos de uma cadeia de guarda que atravessa gerações. A DominionArts existe para tornar esse processo mais consciente, mais informado, e mais belo.",
+      text: "A DominionArts nasce da convicção de que a cultura material importa, de que a forma nunca é neutra, e de que escolher bem o que nos rodeia é uma forma de construir permanência.",
     },
   ],
 
