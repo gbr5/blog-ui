@@ -33,6 +33,14 @@ const variants = [
     tag: "Ousado",
     tagColor: "text-brand-gold-dark bg-brand-gold/10",
   },
+  {
+    href: "/foundational/v5",
+    label: "F5 — Presença Máxima",
+    description:
+      "Tratamento cerimonial e imersivo. Hero full-screen com monograma centrado. Drop cap dourado. Strip navy skewed com tipo maior. Seção em fundo creme para ritmo de leitura. Colofão de encerramento. Próxima leitura como card único. Sem produtos relacionados.",
+    tag: "✦ Novo",
+    tagColor: "text-white bg-brand-navy",
+  },
 ]
 
 export default function FoundationalIndexPage() {

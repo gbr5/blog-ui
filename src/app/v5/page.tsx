@@ -15,6 +15,7 @@ import {
   formatDate,
 } from "@/lib/editorial"
 import { V5Header } from "@/components/v5-header"
+import { V5Footer } from "@/components/v5-footer"
 
 const ALL_CATEGORIES = Object.keys(CATEGORY_LABELS) as Category[]
 
@@ -305,34 +306,7 @@ export default function V5Page() {
         </div>
       </div>
 
-      {/* ─────────────────────────────────────────────
-          BOTTOM BREAK — sand bg, newsletter CTA
-      ───────────────────────────────────────────── */}
-      <div className="bg-[#F4EDD8] px-6 md:px-16 py-14 md:py-16">
-        <div className="mx-auto max-w-[1360px] flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="max-w-sm">
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-brand-gold mb-3">
-              DominionArts · Curadoria
-            </p>
-            <h2 className="font-serif text-[24px] md:text-[28px] text-brand-navy tracking-[-0.02em] leading-tight mb-2">
-              Receba o que merece permanecer
-            </h2>
-            <p className="text-[14px] leading-6 text-slate-600">
-              Artigos, peças e reflexões sobre cultura material — para quem coleciona com intenção.
-            </p>
-          </div>
-          <div className="flex gap-3 w-full md:w-auto">
-            <input
-              type="email"
-              placeholder="seu@email.com"
-              className="flex-1 md:w-64 bg-white border border-slate-200 rounded-full px-4 py-2.5 text-[13px] text-brand-navy placeholder:text-slate-400 outline-none focus:border-brand-navy/30 focus:shadow-[0_0_0_3px_rgba(15,23,42,0.04)] transition-all"
-            />
-            <button className="shrink-0 bg-brand-navy text-white text-[13px] font-medium rounded-full px-5 py-2.5 hover:bg-brand-navy/90 transition-colors">
-              Assinar
-            </button>
-          </div>
-        </div>
-      </div>
+      <V5Footer />
 
     </div>
   )

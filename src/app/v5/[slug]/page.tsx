@@ -13,6 +13,7 @@ import { editorialPosts, CATEGORY_LABELS } from "@/content/editorial-posts"
 import { getLatestPosts, formatDate } from "@/lib/editorial"
 import { postContent, defaultContent, type ContentBlock } from "@/content/post-content"
 import { V5Header } from "@/components/v5-header"
+import { V5Footer } from "@/components/v5-footer"
 
 export function generateStaticParams() {
   return editorialPosts.map((p) => ({ slug: p.slug }))
@@ -360,6 +361,8 @@ export default async function V5PostPage({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </div>
+
+      <V5Footer hideNewsletter />
 
     </div>
   )
