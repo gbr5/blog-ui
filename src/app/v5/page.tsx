@@ -36,7 +36,7 @@ export default function V5Page() {
       {/* ── DEV NAV ── */}
       <div className="absolute top-5 left-5 md:left-8 z-20">
         <Link
-          href="/"
+          href="/lab"
           className="text-[12px] text-white/60 hover:text-white transition-colors backdrop-blur-sm"
         >
           ← UI Lab

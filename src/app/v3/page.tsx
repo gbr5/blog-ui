@@ -30,7 +30,7 @@ export default function V3Page() {
       {/* Back to index */}
       <div className="absolute top-5 left-5 md:left-8 z-20">
         <Link
-          href="/"
+          href="/lab"
           className="text-[13px] text-white/70 hover:text-white transition-colors backdrop-blur-sm"
         >
           ← Índice

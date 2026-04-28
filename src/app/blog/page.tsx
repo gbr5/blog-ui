@@ -49,7 +49,7 @@ export default function BlogIndexPage() {
       <div className="mx-auto max-w-2xl px-6 py-16 md:py-24">
         {/* Back */}
         <Link
-          href="/"
+          href="/lab"
           className="inline-flex items-center gap-1.5 text-[12px] text-slate-400 hover:text-brand-navy transition-colors mb-10"
         >
           ← UI Lab

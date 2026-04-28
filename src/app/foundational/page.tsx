@@ -48,7 +48,7 @@ export default function FoundationalIndexPage() {
     <div className="min-h-screen bg-cream">
       <div className="mx-auto max-w-2xl px-6 py-16 md:py-24">
         <div className="mb-4">
-          <Link href="/" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
+          <Link href="/lab" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
             ← Índice geral
           </Link>
         </div>

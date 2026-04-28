@@ -23,7 +23,7 @@ export default function V4Page() {
     <div className="min-h-screen bg-white">
       {/* Back to index */}
       <div className="mx-auto max-w-[720px] px-6 pt-8 pb-0">
-        <Link href="/" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
+        <Link href="/lab" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
           ← Voltar ao índice
         </Link>
       </div>

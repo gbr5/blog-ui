@@ -55,7 +55,7 @@ export default function InstagramIndexPage() {
 
         {/* Back */}
         <Link
-          href="/"
+          href="/lab"
           className="inline-flex items-center gap-1.5 text-[12px] text-slate-400 hover:text-brand-navy transition-colors mb-10"
         >
           ← UI Lab

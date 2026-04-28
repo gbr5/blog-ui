@@ -28,7 +28,7 @@ export default function V2Page() {
     <div className="min-h-screen bg-white">
       {/* Back to index */}
       <div className="mx-auto max-w-[1200px] px-5 md:px-8 pt-6 pb-0">
-        <Link href="/" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
+        <Link href="/lab" className="text-[13px] text-slate-400 hover:text-brand-navy transition-colors">
           ← Voltar ao índice
         </Link>
       </div>
