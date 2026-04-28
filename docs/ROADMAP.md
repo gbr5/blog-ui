@@ -70,16 +70,14 @@ The foundational text deserves a page that feels ceremonial. More sophisticated 
 
 ---
 
-## Phase 2 — Homepage Redesign ⬜
+## Phase 2 — Homepage Redesign ✅
 
-The `/` route is currently the UI Lab selector. This phase replaces it with a real brand homepage experience following the V5 Presença language.
-
-**Goal:** A homepage that could be the actual DominionArts landing page — not a prototype selector.
+The `/` route is now a real brand homepage in the V5 Presença language. UI Lab moved to `/lab`.
 
 | Item | Route | Status | Notes |
 |------|-------|--------|-------|
-| Homepage V1 (Presença) | `/` | ⬜ | Replaces UI Lab index |
-| Keep UI Lab accessible | `/lab` | ⬜ | Move lab to `/lab` route |
+| Homepage V1 (Presença) | `/` | ✅ | Full-screen hero, collection, editorial, manifesto, Instagram CTA |
+| Keep UI Lab accessible | `/lab` | ✅ | Lab moved to `/lab`, all back-links updated |
 
 ### Homepage design spec
 
@@ -95,15 +93,15 @@ The `/` route is currently the UI Lab selector. This phase replaces it with a re
 
 ---
 
-## Phase 3 — Section Pages ⬜
+## Phase 3 — Section Pages ✅
 
 Individual section pages built in the V5 design language.
 
 | Item | Route | Status | Notes |
 |------|-------|--------|-------|
-| Collection index page | `/colecao` | ⬜ | Product grid with filters, V5 header + footer |
-| About / Visão page | `/sobre` | ⬜ | Brand story, timeline, foundational text teaser |
-| Curadoria page | `/curadoria` | ⬜ | Services for architects + interior designers |
+| Collection index page | `/colecao` | ✅ | 12-piece grid, status + type filter strip, consult CTA |
+| About / Visão page | `/sobre` | ✅ | Full-screen hero, brand story, 3-pillar approach, foundational teaser |
+| Curadoria page | `/curadoria` | ✅ | 3 service cards, process steps, navy quote, WhatsApp CTA |
 
 ---
 
@@ -146,3 +144,5 @@ Quick reference for consistency across all new pages.
 |------|-----------|
 | 2026-04-28 | Phase 0 complete: V5 blog/post/instagram, mobile-first responsive, DESIGN.md |
 | 2026-04-28 | Phase 1 complete: V5 footer, Instagram V5 hero + sticky header, Foundational V5 (F5) |
+| 2026-04-28 | Phase 2 complete: V5 Presença homepage at `/`, UI Lab moved to `/lab` |
+| 2026-04-28 | Phase 3 complete: `/colecao`, `/sobre`, `/curadoria` section pages |
