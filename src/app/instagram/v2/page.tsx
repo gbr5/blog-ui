@@ -51,14 +51,14 @@ export default function RevistaPage() {
         </Link>
       </div>
 
-      <div className="mx-auto w-full max-w-sm px-5 pt-14 pb-12">
+      <div className="mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg px-5 sm:px-7 md:px-8 pt-14 sm:pt-16 md:pt-20 pb-12 sm:pb-16">
 
         {/* Header */}
         <header className="mb-8 pt-2 flex flex-col items-center text-center">
           <span className="font-serif text-[11px] tracking-[0.18em] uppercase text-brand-gold mb-1">
             DA
           </span>
-          <h1 className="font-serif text-[20px] tracking-[0.03em] text-brand-navy">
+          <h1 className="font-serif text-[20px] sm:text-[24px] tracking-[0.03em] text-brand-navy">
             DominionArts
           </h1>
           <div className="mt-3 w-6 h-px bg-brand-gold/40" />
@@ -70,7 +70,7 @@ export default function RevistaPage() {
             <img
               src={featuredPost.image}
               alt={featuredPost.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 sm:h-56 md:h-64 object-cover"
             />
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/80 via-brand-navy-dark/20 to-transparent" />
@@ -85,7 +85,7 @@ export default function RevistaPage() {
               <p className="text-[9px] uppercase tracking-[0.14em] text-brand-gold/90 mb-1">
                 {featuredPost.category}
               </p>
-              <h2 className="font-serif text-[17px] leading-tight text-white">
+              <h2 className="font-serif text-[17px] sm:text-[20px] leading-tight text-white">
                 {featuredPost.title}
               </h2>
             </div>
@@ -112,8 +112,8 @@ export default function RevistaPage() {
 
         {/* Featured product */}
         <section className="mb-8">
-          <div className="flex gap-4 rounded-xl border border-slate-100 bg-white p-4">
-            <div className="w-20 h-24 rounded-lg overflow-hidden shrink-0">
+          <div className="flex gap-4 rounded-xl border border-slate-100 bg-white p-4 sm:p-5">
+            <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-lg overflow-hidden shrink-0">
               <img
                 src={featuredProduct.image}
                 alt={featuredProduct.name}

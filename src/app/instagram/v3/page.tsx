@@ -72,7 +72,7 @@ export default function VitrinePagee() {
         </Link>
       </div>
 
-      <div className="mx-auto w-full max-w-sm px-5 pt-14 pb-12">
+      <div className="mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg px-5 sm:px-7 md:px-8 pt-14 sm:pt-16 md:pt-20 pb-12 sm:pb-16">
 
         {/* Header — minimal */}
         <header className="mb-7 flex items-center justify-between">
@@ -98,7 +98,7 @@ export default function VitrinePagee() {
             <img
               src={heroProduct.image}
               alt={heroProduct.name}
-              className="w-full h-72 object-cover"
+              className="w-full h-72 sm:h-80 md:h-96 object-cover"
             />
             {/* Status badge top right */}
             <div className="absolute top-3 right-3">
@@ -110,7 +110,7 @@ export default function VitrinePagee() {
           <div className="mt-3 px-1">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h2 className="font-serif text-[19px] leading-tight text-brand-navy mb-0.5">
+                <h2 className="font-serif text-[19px] sm:text-[22px] leading-tight text-brand-navy mb-0.5">
                   {heroProduct.name}
                 </h2>
                 <p className="text-[11px] text-slate-400">
@@ -132,14 +132,14 @@ export default function VitrinePagee() {
           <h3 className="text-[9px] uppercase tracking-[0.18em] text-slate-300 mb-4 px-1">
             Seleção desta semana
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             {collection.map((item, i) => (
               <a key={i} href="#" className="group block">
                 <div className="relative rounded-xl overflow-hidden bg-sand-light mb-2">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-36 object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    className="w-full h-36 sm:h-40 object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   />
                   <div className="absolute top-2 right-2">
                     <span className={`text-[8px] font-medium uppercase tracking-[0.1em] px-1.5 py-0.5 rounded-full ${statusColors[item.status]}`}>
@@ -168,7 +168,7 @@ export default function VitrinePagee() {
           <p className="text-[9px] uppercase tracking-[0.18em] text-slate-300 mb-3 px-1">
             Visto recentemente no Instagram
           </p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3">
             {recentInstagram.map((item, i) => (
               <a key={i} href="#" className="group block">
                 <div className="aspect-square rounded-xl overflow-hidden bg-sand-light mb-1.5">

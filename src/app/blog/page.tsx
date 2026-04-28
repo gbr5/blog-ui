@@ -33,6 +33,14 @@ const variants = [
     tag: "Minimalista",
     tagColor: "text-slate-600 bg-sand-light",
   },
+  {
+    href: "/v5",
+    label: "V5 — Presença",
+    description:
+      "Light, cheerful, image-led. Hero com header sticky ao rolar. Breaks de background entre seções. Destacaes tipográficos. Strip navy com frase skewed. Post com seções de autor + produtos + relacionados.",
+    tag: "✦ Novo",
+    tagColor: "text-white bg-brand-navy",
+  },
 ]
 
 export default function BlogIndexPage() {

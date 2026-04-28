@@ -37,12 +37,21 @@ const variants = [
     tagColor: "text-slate-600 bg-sand-light",
     preview: "bg-[#F4EDD8]",
   },
+  {
+    href: "/instagram/v5",
+    label: "V5 — Presença",
+    description:
+      "Segue a linguagem visual do blog V5. Light, editorial, image-led. Header sticky com search. Seção de produtos com grid. Strip navy com citação. Cheerful mas sofisticado.",
+    tag: "✦ Novo · Claro",
+    tagColor: "text-white bg-brand-navy",
+    preview: "bg-white",
+  },
 ]
 
 export default function InstagramIndexPage() {
   return (
     <div className="min-h-screen bg-cream">
-      <div className="mx-auto max-w-2xl px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-2xl px-5 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24">
 
         {/* Back */}
         <Link
@@ -57,7 +66,7 @@ export default function InstagramIndexPage() {
           <p className="text-xs font-medium uppercase tracking-[0.12em] text-brand-gold mb-3">
             DominionArts · Instagram Gateway
           </p>
-          <h1 className="font-serif text-4xl md:text-5xl text-brand-navy tracking-[-0.02em] leading-[1.05] mb-4">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-navy tracking-[-0.02em] leading-[1.05] mb-4">
             Link-in-Bio<br />Variations
           </h1>
           <p className="text-[16px] leading-7 text-slate-500 max-w-sm">

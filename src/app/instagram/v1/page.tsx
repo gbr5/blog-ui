@@ -58,19 +58,19 @@ export default function EntradaPage() {
         </Link>
       </div>
 
-      <div className="flex-1 mx-auto w-full max-w-sm px-6 pt-16 pb-10 flex flex-col">
+      <div className="flex-1 mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg px-6 sm:px-8 pt-14 sm:pt-16 md:pt-20 pb-10 sm:pb-14 flex flex-col">
 
         {/* Monogram */}
-        <div className="mb-10 flex flex-col items-center">
+        <div className="mb-10 sm:mb-12 flex flex-col items-center">
           <div
-            className="flex items-center justify-center w-[52px] h-[52px] rounded-full mb-5"
+            className="flex items-center justify-center w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-full mb-5"
             style={{ border: "1px solid rgba(245,237,224,0.12)" }}
           >
-            <span className="font-serif text-lg" style={{ color: "oklch(0.75 0.12 85)" }}>
+            <span className="font-serif text-lg sm:text-xl" style={{ color: "oklch(0.75 0.12 85)" }}>
               DA
             </span>
           </div>
-          <h1 className="font-serif text-[22px] tracking-[0.04em] text-[#F5EDE0]">
+          <h1 className="font-serif text-[22px] sm:text-[26px] tracking-[0.04em] text-[#F5EDE0]">
             DominionArts
           </h1>
           <p
@@ -83,7 +83,7 @@ export default function EntradaPage() {
 
         {/* Gold rule */}
         <div
-          className="w-6 h-px mx-auto mb-10"
+          className="w-6 h-px mx-auto mb-10 sm:mb-12"
           style={{ background: "oklch(0.75 0.12 85)", opacity: 0.45 }}
         />
 
@@ -93,7 +93,7 @@ export default function EntradaPage() {
             <a
               key={link.num}
               href={link.href}
-              className="group flex items-center justify-between py-4"
+              className="group flex items-center justify-between py-4 sm:py-5"
               style={{ borderBottom: "1px solid rgba(245,237,224,0.07)" }}
             >
               <div className="flex items-start gap-4">
@@ -136,7 +136,7 @@ export default function EntradaPage() {
           >
             Visto recentemente no Instagram
           </p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3">
             {recentInstagram.map((item, i) => (
               <a key={i} href="#" className="group block">
                 <div className="aspect-square rounded-lg overflow-hidden mb-1.5 bg-[#F5EDE0]/5">

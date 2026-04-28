@@ -49,12 +49,12 @@ export default function CartaPage() {
         </Link>
       </div>
 
-      <div className="flex-1 mx-auto w-full max-w-sm px-7 pt-16 pb-12 flex flex-col">
+      <div className="flex-1 mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg px-7 sm:px-9 md:px-10 pt-14 sm:pt-16 md:pt-20 pb-12 sm:pb-16 flex flex-col">
 
         {/* Monogram */}
         <div className="mb-10">
           <span
-            className="font-serif italic text-[52px] leading-none tracking-[-0.02em]"
+            className="font-serif italic text-[52px] sm:text-[64px] leading-none tracking-[-0.02em]"
             style={{ color: "oklch(0.30 0.06 250)" }}
           >
             DA
@@ -93,7 +93,7 @@ export default function CartaPage() {
 
         {/* Opening line */}
         <p
-          className="font-serif italic text-[17px] leading-relaxed mb-8"
+          className="font-serif italic text-[17px] sm:text-[19px] leading-relaxed mb-8"
           style={{ color: "oklch(0.30 0.06 250)" }}
         >
           Bem-vindo à DominionArts.<br />
@@ -106,7 +106,7 @@ export default function CartaPage() {
             <a
               key={i}
               href={link.href}
-              className="group block py-3 border-b"
+              className="group block py-3 sm:py-4 border-b"
               style={{ borderColor: "rgba(28,18,8,0.08)" }}
             >
               <div className="flex items-baseline gap-3">

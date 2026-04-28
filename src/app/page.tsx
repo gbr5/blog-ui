@@ -8,7 +8,7 @@ const sections = [
       "4 variações de layout para o blog editorial da DominionArts. Hierarquia, tipografia, experiência mobile.",
     tag: "4 variações",
     tagColor: "text-brand-navy bg-brand-navy/8",
-    meta: "/v1 · /v2 · /v3 · /v4 · /foundational",
+    meta: "/v1 · /v2 · /v3 · /v4 · /v5 · /foundational",
   },
   {
     href: "/instagram",
@@ -17,7 +17,7 @@ const sections = [
       "Alternativas para o link-in-bio do Instagram. Do escuro ao editorial, do product showcase ao ultra-minimalista.",
     tag: "4 variações",
     tagColor: "text-brand-gold-dark bg-brand-gold/10",
-    meta: "/v1 Entrada · /v2 Revista · /v3 Vitrine · /v4 Carta",
+    meta: "/v1 Entrada · /v2 Revista · /v3 Vitrine · /v4 Carta · /v5 Presença",
   },
 ]
 
