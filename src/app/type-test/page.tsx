@@ -89,19 +89,21 @@ const ACTIVE: TestEntry[] = [
       "components/v5-footer.tsx",
     ],
   },
+  {
+    href: "/type-test/hero-imagem",
+    label: "Título hero (sobre imagem)",
+    desc: "Display 36–96px sobre fotografia. Cada fonte renderiza em 3 imagens em simultâneo (escura, clara, agitada). Overlay (gradiente / scrim / vignette / nenhum), sombra (suave / forte / glow) e cor (branco / cream / gold / navy).",
+    status: "em teste",
+    locations: [
+      "v5/page.tsx",
+      "instagram/v6/page.tsx",
+      "foundational/v5/page.tsx",
+      "colecao/page.tsx",
+    ],
+  },
 ]
 
 const BACKLOG: TestEntry[] = [
-  {
-    label: "Título hero (sobre imagem)",
-    desc: "Tipo display grande em cima de fotografia com overlay. Contexto diferente do artigo — precisa de contraste e impacto. Testar família, tamanho e shadow/overlay.",
-    status: "backlog",
-    priority: "média",
-    locations: [
-      "instagram/v6/page.tsx",
-      "v5/page.tsx",
-    ],
-  },
   {
     label: "Labels e captions",
     desc: "O sistema de pequenas etiquetas em maiúsculas com tracking largo (8–10px). São usadas em toda a UI como marcadores de categoria e secção. Testar tamanho, tracking e se devem ser serif ou sans.",
