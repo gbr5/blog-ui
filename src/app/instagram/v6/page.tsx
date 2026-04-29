@@ -293,17 +293,18 @@ export default function InstagramV6Page() {
       ───────────────────────────────────────────────────── */}
       <section className="bg-brand-navy py-16 md:py-20">
         <div className="mx-auto max-w-[1360px] px-5 md:px-8">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-8">
               <div className="h-px w-6 bg-brand-gold/50" />
               <span className="text-[8px] uppercase tracking-[0.24em] text-brand-gold/70">Visão</span>
+              <div className="h-px w-6 bg-brand-gold/50" />
             </div>
             <blockquote>
               <p className="font-serif text-[24px] sm:text-[30px] md:text-[36px] text-white leading-[1.3] italic tracking-[-0.01em] mb-6">
                 &ldquo;Cercar-se do que merece permanecer.&rdquo;
               </p>
             </blockquote>
-            <p className="text-[14px] leading-7 text-white/45 mb-8 max-w-lg">
+            <p className="text-[14px] leading-7 text-white/45 mb-8 max-w-lg mx-auto">
               Objetos que atravessam gerações carregam mais do que estética — são testemunhos da habilidade humana, da história e do gosto cultivado ao longo do tempo.
             </p>
             <Link
@@ -322,8 +323,8 @@ export default function InstagramV6Page() {
       ───────────────────────────────────────────────────── */}
       <section className="bg-cream py-16 md:py-20">
         <div className="mx-auto max-w-[1360px] px-5 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div className="max-w-lg">
+          <div className="flex flex-col items-center text-center gap-8 max-w-lg mx-auto">
+            <div>
               <p className="text-[9px] uppercase tracking-[0.22em] text-brand-gold mb-3">Curadoria privada</p>
               <p className="font-serif text-[24px] sm:text-[28px] md:text-[32px] text-brand-navy leading-[1.2] tracking-[-0.01em] mb-3">
                 Procura uma peça específica?
@@ -333,7 +334,7 @@ export default function InstagramV6Page() {
                 nossa equipe acompanha sua busca do início ao fim.
               </p>
             </div>
-            <div className="shrink-0 flex flex-col sm:flex-row md:flex-col gap-3">
+            <div className="flex flex-row gap-3">
               <a
                 href="https://wa.me/5511999999999?text=Ol%C3%A1%2C+vim+pelo+Instagram"
                 className="inline-flex items-center justify-center gap-2 bg-brand-navy text-white text-[13px] font-medium px-8 py-3.5 rounded-full hover:bg-brand-navy/90 transition-colors shadow-[0_4px_18px_rgba(15,23,42,0.15)]"
