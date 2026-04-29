@@ -2,10 +2,10 @@
 
 /**
  * Typography Test — Pullquote Block
- * - All controls in sticky header (including font selection as multi-select)
- * - Jump index at top: vertical list of active fonts
+ * - Font selects in header: standard-height dropdowns that add fonts to comparison
+ * - Remove button per font section (right of copy button)
+ * - Empty selection defaults to all fonts
  * - Settings + active fonts synced to URL
- * - Per-font copy button → descriptive JSON
  */
 
 import { useState, useEffect, Suspense } from "react"
@@ -48,7 +48,7 @@ const DEFAULTS: Settings = {
 
 const WEIGHT_LABELS: Record<Weight, string> = {
   "400": "Regular", "500": "Medium", "600": "Semibold",
-  "700": "Bold", "800": "Extrabold", "900": "Black",
+  "700": "Bold",    "800": "Extrabold", "900": "Black",
 }
 const SIZE_LABELS: Record<Size, string> = {
   xs: "XS — 18→34px", sm: "SM — 22→44px", md: "MD — 26→52px",
@@ -74,7 +74,6 @@ const FONTS = [
 ]
 const ALL_FONT_IDS = FONTS.map((f) => f.id)
 
-// ─── Size maps ─────────────────────────────────────────────────────────────
 const SIZE_CLASSES: Record<Size, string> = {
   xs: "text-[18px] sm:text-[22px] md:text-[28px] lg:text-[34px]",
   sm: "text-[22px] sm:text-[28px] md:text-[36px] lg:text-[44px]",
@@ -83,13 +82,16 @@ const SIZE_CLASSES: Record<Size, string> = {
   xl: "text-[34px] sm:text-[48px] md:text-[60px] lg:text-[72px]",
 }
 const SIZE_PADDING: Record<Size, string> = {
-  xs: "2.5rem 1.5rem", sm: "3rem 1.5rem", md: "3.5rem 1.5rem",
+  xs: "2.5rem 1.5rem", sm: "3rem 1.5rem",  md: "3.5rem 1.5rem",
   lg: "4.5rem 1.5rem", xl: "5.5rem 1.5rem",
 }
 
 const QUOTE  = "A beleza que dura não é perfeição — é autenticidade."
 const BODY_A = "Há uma diferença fundamental entre coisas que ficam velhas e coisas que ganham profundidade com o tempo. O primeiro processo é deterioração. O segundo é acumulação de significado."
 const BODY_B = "A patina de um bronze, o desgaste de um couro bem curtido, a irregularidade de uma cerâmica feita à mão — esses são os rastros do uso e do tempo que conferem ao objeto uma presença que a fabricação industrial não consegue simular."
+
+// ─── Shared select style ───────────────────────────────────────────────────
+const SELECT_CLS = "text-[11px] text-brand-navy border border-slate-200 rounded px-2 py-1.5 bg-white outline-none focus:border-brand-navy/40 cursor-pointer min-w-[80px]"
 
 // ─── Pullquote ─────────────────────────────────────────────────────────────
 function Pullquote({ font, settings }: { font: typeof FONTS[0]; settings: Settings }) {
@@ -132,47 +134,49 @@ function Select<T extends string>({
   return (
     <div className="flex flex-col gap-1 shrink-0">
       <label className="text-[8px] font-medium uppercase tracking-[0.18em] text-slate-400">{label}</label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value as T)}
-        className="text-[11px] text-brand-navy border border-slate-200 rounded px-2 py-1.5 bg-white outline-none focus:border-brand-navy/40 cursor-pointer min-w-[80px]"
-      >
+      <select value={value} onChange={(e) => onChange(e.target.value as T)} className={SELECT_CLS}>
         {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
   )
 }
 
-// ─── Multi-select (font picker) ────────────────────────────────────────────
-function FontMultiSelect({
-  label, options, values, onChange,
+// ─── Font add select (standard height, adds one font on pick) ──────────────
+function FontAddSelect({
+  label, options, onAdd,
 }: {
   label: string
   options: { label: string; value: string }[]
-  values: Set<string>
-  onChange: (v: Set<string>) => void
+  onAdd: (id: string) => void
 }) {
+  const [val, setVal] = useState("")
+
+  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const id = e.target.value
+    if (!id) return
+    onAdd(id)
+    setVal("")
+  }
+
   return (
     <div className="flex flex-col gap-1 shrink-0">
-      <label className="text-[8px] font-medium uppercase tracking-[0.18em] text-slate-400">
-        {label}
-        <span className="ml-1.5 text-slate-300 normal-case tracking-normal">ctrl+click</span>
-      </label>
-      <select
-        multiple
-        size={options.length}
-        value={[...values]}
-        onChange={(e) => onChange(new Set(Array.from(e.target.selectedOptions).map((o) => o.value)))}
-        className="text-[11px] text-brand-navy border border-slate-200 rounded px-2 py-0.5 bg-white outline-none focus:border-brand-navy/40 cursor-pointer min-w-[160px]"
-      >
-        {options.map((o) => <option key={o.value} value={o.value} className="py-0.5">{o.label}</option>)}
+      <label className="text-[8px] font-medium uppercase tracking-[0.18em] text-slate-400">{label}</label>
+      <select value={val} onChange={handleChange} className={SELECT_CLS}>
+        <option value="">Adicionar...</option>
+        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
   )
 }
 
-// ─── Copy button ───────────────────────────────────────────────────────────
-function CopyButton({ font, settings }: { font: typeof FONTS[0]; settings: Settings }) {
+// ─── Copy + remove buttons ─────────────────────────────────────────────────
+function FontActions({
+  font, settings, onRemove,
+}: {
+  font: typeof FONTS[0]
+  settings: Settings
+  onRemove: () => void
+}) {
   const [copied, setCopied] = useState(false)
 
   function copy() {
@@ -199,16 +203,25 @@ function CopyButton({ font, settings }: { font: typeof FONTS[0]; settings: Setti
   }
 
   return (
-    <button
-      onClick={copy}
-      className={`text-[10px] font-medium px-3 py-1 rounded-full border transition-all ${
-        copied
-          ? "border-emerald-200 text-emerald-600 bg-emerald-50"
-          : "border-slate-200 text-slate-400 hover:border-brand-navy/30 hover:text-brand-navy"
-      }`}
-    >
-      {copied ? "Copiado ✓" : "Copiar opções"}
-    </button>
+    <div className="flex items-center gap-2">
+      <button
+        onClick={copy}
+        className={`text-[10px] font-medium px-3 py-1 rounded-full border transition-all ${
+          copied
+            ? "border-emerald-200 text-emerald-600 bg-emerald-50"
+            : "border-slate-200 text-slate-400 hover:border-brand-navy/30 hover:text-brand-navy"
+        }`}
+      >
+        {copied ? "Copiado ✓" : "Copiar opções"}
+      </button>
+
+      <button
+        onClick={onRemove}
+        className="text-[10px] font-medium px-3 py-1 rounded-full border border-slate-200 text-slate-300 hover:border-red-200 hover:text-red-400 transition-all"
+      >
+        Remover
+      </button>
+    </div>
   )
 }
 
@@ -225,18 +238,23 @@ function TypeTestInner() {
     lineH:    searchParams.get("lineH")                || DEFAULTS.lineH,
   }))
 
-  const [activeFonts, setActiveFonts] = useState<Set<string>>(() => {
+  // Empty set = all fonts (default). We store null to mean "all".
+  const [activeFonts, setActiveFonts] = useState<Set<string> | null>(() => {
     const param = searchParams.get("fonts")
-    if (param) return new Set(param.split(",").filter((id) => ALL_FONT_IDS.includes(id)))
-    return new Set(ALL_FONT_IDS)
+    if (!param) return null // null = all
+    const ids = param.split(",").filter((id) => ALL_FONT_IDS.includes(id))
+    return ids.length === 0 ? null : new Set(ids)
   })
+
+  // Resolved list: null means all
+  const resolvedActive = activeFonts ?? new Set(ALL_FONT_IDS)
 
   useEffect(() => {
     const params = new URLSearchParams({
       weight: settings.weight, size: settings.size, case: settings.textCase,
       tracking: settings.tracking, lineH: settings.lineH,
-      fonts: [...activeFonts].join(","),
     })
+    if (activeFonts !== null) params.set("fonts", [...activeFonts].join(","))
     router.replace(`?${params.toString()}`, { scroll: false })
   }, [settings, activeFonts, router])
 
@@ -244,11 +262,31 @@ function TypeTestInner() {
     setSettings((s) => ({ ...s, [key]: val }))
   }
 
-  const serifs        = FONTS.filter((f) => f.serif)
-  const sansSerif     = FONTS.filter((f) => !f.serif)
-  const activeSerifs  = serifs.filter((f) => activeFonts.has(f.id))
-  const activeSans    = sansSerif.filter((f) => activeFonts.has(f.id))
-  const activeFontList = FONTS.filter((f) => activeFonts.has(f.id))
+  function addFont(id: string) {
+    setActiveFonts((prev) => {
+      const base = prev ?? new Set(ALL_FONT_IDS)
+      return new Set([...base, id])
+    })
+  }
+
+  function removeFont(id: string) {
+    setActiveFonts((prev) => {
+      const base = prev ?? new Set(ALL_FONT_IDS)
+      const next = new Set([...base].filter((x) => x !== id))
+      return next.size === 0 ? null : next // if all removed, reset to all
+    })
+  }
+
+  const serifs    = FONTS.filter((f) => f.serif)
+  const sansSerif = FONTS.filter((f) => !f.serif)
+
+  const activeSerifs = serifs.filter((f) => resolvedActive.has(f.id))
+  const activeSans   = sansSerif.filter((f) => resolvedActive.has(f.id))
+  const activeFontList = FONTS.filter((f) => resolvedActive.has(f.id))
+
+  // Options for add-selects: only show fonts not already active
+  const addSerifOptions  = serifs.filter((f) => !resolvedActive.has(f.id)).map((f) => ({ label: f.label, value: f.id }))
+  const addSansOptions   = sansSerif.filter((f) => !resolvedActive.has(f.id)).map((f) => ({ label: f.label, value: f.id }))
 
   return (
     <div className="min-h-screen bg-white">
@@ -256,7 +294,6 @@ function TypeTestInner() {
       {/* ── Sticky header ───────────────────────────────── */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-[0_1px_8px_rgba(15,23,42,0.04)]">
 
-        {/* Breadcrumb */}
         <div className="mx-auto max-w-[1360px] px-5 md:px-8 pt-2.5 pb-1 flex items-center gap-2">
           <Link href="/" className="text-[10px] text-slate-300 hover:text-brand-navy transition-colors">início</Link>
           <span className="text-slate-200 text-[10px]">/</span>
@@ -265,9 +302,8 @@ function TypeTestInner() {
           <span className="text-[10px] text-brand-gold/70">pullquote</span>
         </div>
 
-        {/* Controls */}
         <div className="mx-auto max-w-[1360px] px-5 md:px-8 pb-3 overflow-x-auto">
-          <div className="flex items-start gap-4 md:gap-5 min-w-max">
+          <div className="flex items-end gap-4 md:gap-5 min-w-max">
 
             <Select label="Peso" value={settings.weight} onChange={(v) => set("weight", v)}
               options={[
@@ -279,7 +315,7 @@ function TypeTestInner() {
                 { label: "900 — Black",     value: "900" },
               ]}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
             <Select label="Tamanho" value={settings.size} onChange={(v) => set("size", v)}
               options={[
@@ -290,7 +326,7 @@ function TypeTestInner() {
                 { label: "XL — 34→72px", value: "xl" },
               ]}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
             <Select label="Caixa" value={settings.textCase} onChange={(v) => set("textCase", v)}
               options={[
@@ -301,7 +337,7 @@ function TypeTestInner() {
                 { label: "lowercase",  value: "lowercase" },
               ]}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
             <Select label="Tracking" value={settings.tracking} onChange={(v) => set("tracking", v)}
               options={[
@@ -318,39 +354,31 @@ function TypeTestInner() {
                 { label: "+0.10em", value: "0.10em" },
               ]}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
             <Select label="Entrelinha" value={settings.lineH} onChange={(v) => set("lineH", v)}
               options={LINE_H_OPTIONS.map((v) => ({ label: v, value: v }))}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
-            <FontMultiSelect
+            <FontAddSelect
               label="Serifadas"
-              values={new Set([...activeFonts].filter((id) => serifs.some((f) => f.id === id)))}
-              onChange={(selected) => {
-                const sansIds = new Set([...activeFonts].filter((id) => sansSerif.some((f) => f.id === id)))
-                setActiveFonts(new Set([...selected, ...sansIds]))
-              }}
-              options={serifs.map((f) => ({ label: f.label, value: f.id }))}
+              options={addSerifOptions}
+              onAdd={addFont}
             />
-            <div className="w-px bg-slate-100 self-stretch mt-4" />
+            <div className="w-px h-7 bg-slate-100 self-end mb-1" />
 
-            <FontMultiSelect
+            <FontAddSelect
               label="Sem serifa"
-              values={new Set([...activeFonts].filter((id) => sansSerif.some((f) => f.id === id)))}
-              onChange={(selected) => {
-                const serifIds = new Set([...activeFonts].filter((id) => serifs.some((f) => f.id === id)))
-                setActiveFonts(new Set([...serifIds, ...selected]))
-              }}
-              options={sansSerif.map((f) => ({ label: f.label, value: f.id }))}
+              options={addSansOptions}
+              onAdd={addFont}
             />
 
           </div>
         </div>
       </div>
 
-      {/* ── Page header ─────────────────────────────────── */}
+      {/* ── Page header + jump index ─────────────────────── */}
       <header className="mx-auto max-w-[700px] px-5 md:px-8 pt-12 pb-10 border-b border-slate-100">
         <p className="text-[9px] uppercase tracking-[0.22em] text-brand-gold mb-4">
           Teste tipográfico · Componente pullquote
@@ -359,32 +387,25 @@ function TypeTestInner() {
           Qual fonte serve melhor o bloco de citação?
         </h1>
         <p className="text-[14px] leading-7 text-slate-400 mb-10">
-          10 famílias — 5 serifadas, 5 sem serifa. O URL actualiza-se com
-          as suas opções. Use ctrl+click nas listas do menu para seleccionar
-          múltiplas fontes.
+          10 famílias — 5 serifadas, 5 sem serifa. Adicione fontes pelo menu
+          acima, remova-as pelo botão em cada secção. O URL actualiza-se com
+          as suas opções.
         </p>
 
-        {/* ── Jump index: vertical list of active fonts ── */}
-        {activeFontList.length > 0 ? (
-          <nav className="flex flex-col gap-2">
-            {activeFontList.map((f) => (
-              <a
-                key={f.id}
-                href={`#${f.id}`}
-                className="group flex items-center gap-3 text-[13px] text-slate-400 hover:text-brand-navy transition-colors"
-              >
-                <span className="text-brand-gold/40 group-hover:text-brand-gold transition-colors text-[10px]">↓</span>
-                <span>{f.label}</span>
-                {f.serif
-                  ? <span className="text-[9px] text-slate-200 uppercase tracking-[0.12em]">serif</span>
-                  : <span className="text-[9px] text-slate-200 uppercase tracking-[0.12em]">sans</span>
-                }
-              </a>
-            ))}
-          </nav>
-        ) : (
-          <p className="text-[13px] text-slate-300 italic">Nenhuma fonte seleccionada. Use o menu acima para escolher.</p>
-        )}
+        {/* Vertical jump index */}
+        <nav className="flex flex-col gap-2">
+          {activeFontList.map((f) => (
+            <a
+              key={f.id}
+              href={`#${f.id}`}
+              className="group flex items-center gap-3 text-[13px] text-slate-400 hover:text-brand-navy transition-colors"
+            >
+              <span className="text-brand-gold/40 group-hover:text-brand-gold transition-colors text-[10px]">↓</span>
+              <span>{f.label}</span>
+              <span className="text-[9px] text-slate-200 uppercase tracking-[0.12em]">{f.serif ? "serif" : "sans"}</span>
+            </a>
+          ))}
+        </nav>
       </header>
 
       {/* ── Serif section ────────────────────────────────── */}
@@ -407,11 +428,14 @@ function TypeTestInner() {
             </div>
             <p className="text-[15px] leading-7 text-slate-500">{i % 2 === 0 ? BODY_A : BODY_B}</p>
           </div>
+
           <Pullquote font={font} settings={settings} />
+
           <div className="mx-auto max-w-[700px] px-5 md:px-8 mb-2">
             <p className="text-[15px] leading-7 text-slate-500 mb-5">{i % 2 === 0 ? BODY_B : BODY_A}</p>
-            <CopyButton font={font} settings={settings} />
+            <FontActions font={font} settings={settings} onRemove={() => removeFont(font.id)} />
           </div>
+
           {i < activeSerifs.length - 1 && (
             <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-10"><div className="h-px bg-slate-100" /></div>
           )}
@@ -437,11 +461,14 @@ function TypeTestInner() {
             </div>
             <p className="text-[15px] leading-7 text-slate-500">{i % 2 === 0 ? BODY_A : BODY_B}</p>
           </div>
+
           <Pullquote font={font} settings={settings} />
+
           <div className="mx-auto max-w-[700px] px-5 md:px-8 mb-2">
             <p className="text-[15px] leading-7 text-slate-500 mb-5">{i % 2 === 0 ? BODY_B : BODY_A}</p>
-            <CopyButton font={font} settings={settings} />
+            <FontActions font={font} settings={settings} onRemove={() => removeFont(font.id)} />
           </div>
+
           {i < activeSans.length - 1 && (
             <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-10"><div className="h-px bg-slate-100" /></div>
           )}
