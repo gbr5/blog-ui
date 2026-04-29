@@ -40,19 +40,19 @@ const ACTIVE: TestEntry[] = [
       "foundational/v5/page.tsx",
     ],
   },
-]
-
-const BACKLOG: TestEntry[] = [
   {
+    href: "/type-test/h1-titulo",
     label: "Título de artigo (h1)",
-    desc: "O título principal de cada post. Display type em grande — reage de forma diferente ao pullquote mesmo usando a mesma família. Testar escala, peso e tracking.",
-    status: "backlog",
-    priority: "alta",
+    desc: "Display type do hero — 32–80px com leading apertado. Mesma família do pullquote mas comportamento diferente em escala. Testa título curto/médio/longo em fundo claro e escuro.",
+    status: "em teste",
     locations: [
       "v5/[slug]/page.tsx",
       "foundational/v5/page.tsx",
     ],
   },
+]
+
+const BACKLOG: TestEntry[] = [
   {
     label: "Navegação principal",
     desc: "Links do header em todas as páginas. Fonte, tamanho, tracking e peso influenciam o tom geral — mais editorial vs. mais comercial.",
