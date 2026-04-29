@@ -59,19 +59,19 @@ const ACTIVE: TestEntry[] = [
       "components/v5-header.tsx",
     ],
   },
-]
-
-const BACKLOG: TestEntry[] = [
   {
+    href: "/type-test/h2-h3",
     label: "Subtítulos (h2 / h3)",
-    desc: "Cabeçalhos de secção dentro de artigos. Actualmente Playfair. Testar se devem herdar a fonte do corpo ou manter uma família display própria.",
-    status: "backlog",
-    priority: "média",
+    desc: "Cabeçalhos de secção dentro de artigos. Corpo de texto fixo (Plus Jakarta Sans 15px) como referência estável. h3 escala em 78% do h2. Testa 5 tratamentos decorativos (plain, linhas, kicker, lateral).",
+    status: "em teste",
     locations: [
       "v5/[slug]/page.tsx",
       "foundational/v5/page.tsx",
     ],
   },
+]
+
+const BACKLOG: TestEntry[] = [
   {
     label: "Cartão de produto",
     desc: "Card usado na /colecao. Testar proporção da imagem (3/4 vs 4/5 vs quadrado), tipografia do título, badge de status e espaçamento interno.",
