@@ -50,18 +50,18 @@ const ACTIVE: TestEntry[] = [
       "foundational/v5/page.tsx",
     ],
   },
-]
-
-const BACKLOG: TestEntry[] = [
   {
+    href: "/type-test/nav-links",
     label: "Navegação principal",
-    desc: "Links do header em todas as páginas. Fonte, tamanho, tracking e peso influenciam o tom geral — mais editorial vs. mais comercial.",
-    status: "backlog",
-    priority: "alta",
+    desc: "Links do header com 5 destinos reais (Editorial / Coleção / Foundational / Sobre / Loja). Testa fonte, tamanho, peso, tracking, caixa e separadores em barra desktop + drawer mobile.",
+    status: "em teste",
     locations: [
       "components/v5-header.tsx",
     ],
   },
+]
+
+const BACKLOG: TestEntry[] = [
   {
     label: "Subtítulos (h2 / h3)",
     desc: "Cabeçalhos de secção dentro de artigos. Actualmente Playfair. Testar se devem herdar a fonte do corpo ou manter uma família display própria.",
