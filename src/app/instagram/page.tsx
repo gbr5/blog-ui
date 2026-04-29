@@ -42,7 +42,16 @@ const variants = [
     label: "V5 — Presença",
     description:
       "Segue a linguagem visual do blog V5. Light, editorial, image-led. Header sticky com search. Seção de produtos com grid. Strip navy com citação. Cheerful mas sofisticado.",
-    tag: "✦ Novo · Claro",
+    tag: "Claro",
+    tagColor: "text-brand-navy bg-brand-navy/8",
+    preview: "bg-white",
+  },
+  {
+    href: "/instagram/v6",
+    label: "V6 — Website",
+    description:
+      "V5 repensado como página do site. Largura total, header e footer V5 completos, seções com background full-bleed (cream, navy), grid de 4 colunas no desktop, editorial lado a lado. Presença de site, não de link-in-bio.",
+    tag: "✦ Novo · Website",
     tagColor: "text-white bg-brand-navy",
     preview: "bg-white",
   },
