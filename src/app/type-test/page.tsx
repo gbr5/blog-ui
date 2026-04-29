@@ -79,19 +79,19 @@ const ACTIVE: TestEntry[] = [
       "instagram/v6/page.tsx",
     ],
   },
-]
-
-const BACKLOG: TestEntry[] = [
   {
+    href: "/type-test/botoes",
     label: "Botões e CTAs",
-    desc: "Pill arredondado vs. levemente arredondado vs. quadrado. Peso do texto, tracking, tamanho e hierarquia primário/secundário/ghost.",
-    status: "backlog",
-    priority: "média",
+    desc: "Três hierarquias (primário / secundário / ghost) por fonte, em fundo claro e fundo escuro. Forma (pill / arredondado / suave / recto), tamanho (sm/md/lg), peso, tracking, caixa e ícone.",
+    status: "em teste",
     locations: [
       "instagram/v6/page.tsx",
       "components/v5-footer.tsx",
     ],
   },
+]
+
+const BACKLOG: TestEntry[] = [
   {
     label: "Título hero (sobre imagem)",
     desc: "Tipo display grande em cima de fotografia com overlay. Contexto diferente do artigo — precisa de contraste e impacto. Testar família, tamanho e shadow/overlay.",
