@@ -69,19 +69,19 @@ const ACTIVE: TestEntry[] = [
       "foundational/v5/page.tsx",
     ],
   },
+  {
+    href: "/type-test/cartao-produto",
+    label: "Cartão de produto",
+    desc: "Componente inteiro: proporção (3/4, 4/5, quadrado, 5/7, 5/4), raio, tipografia do título, badge de status (4 posições × 3 estilos), densidade e meta (mínimo / regular / completo). Renderiza fila de 3 cartões por fonte.",
+    status: "em teste",
+    locations: [
+      "colecao/page.tsx",
+      "instagram/v6/page.tsx",
+    ],
+  },
 ]
 
 const BACKLOG: TestEntry[] = [
-  {
-    label: "Cartão de produto",
-    desc: "Card usado na /colecao. Testar proporção da imagem (3/4 vs 4/5 vs quadrado), tipografia do título, badge de status e espaçamento interno.",
-    status: "backlog",
-    priority: "média",
-    locations: [
-      "instagram/v6/page.tsx",
-      "colecao/page.tsx",
-    ],
-  },
   {
     label: "Botões e CTAs",
     desc: "Pill arredondado vs. levemente arredondado vs. quadrado. Peso do texto, tracking, tamanho e hierarquia primário/secundário/ghost.",
