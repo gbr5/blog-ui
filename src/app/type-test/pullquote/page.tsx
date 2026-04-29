@@ -7,53 +7,355 @@
  *   - instagram/v5/page.tsx    (phone manifesto, italic, compact)
  *   - instagram/v6/page.tsx    (website manifesto, full-width, centered)
  *
- * Variants are grouped by decision axis — font, weight, style, case, size.
- * Thin weights (300/400) excluded: this is a highlight component.
- * Libre Baskerville excluded: too newspaper for DominionArts.
+ * 37 variants — data-driven. No italics. No quotes. Text centered.
+ * Thin weights (< 600) excluded: highlight component.
  */
 
 import Link from "next/link"
 
 const QUOTE = "A beleza que dura não é perfeição — é autenticidade."
-const QUOTE_CAPS = "A beleza que dura não é perfeição — é autenticidade."
 
 const BODY_A =
   "Há uma diferença fundamental entre coisas que ficam velhas e coisas que ganham profundidade com o tempo. O primeiro processo é deterioração. O segundo é acumulação de significado."
 
 const BODY_B =
-  "Um relógio de bolso que pertenceu ao avô não é apenas um relógio antigo — é um repositório de tempo vivido, de decisões tomadas, de momentos que ele testemunhou sem saber."
-
-const BODY_C =
   "A patina de um bronze, o desgaste de um couro bem curtido, a irregularidade de uma cerâmica feita à mão — esses são os rastros do uso e do tempo que conferem ao objeto uma presença que a fabricação industrial não consegue simular."
 
-// ─── Pullquote shell ───────────────────────────────────────────────────────
-function PullquoteShell({
-  fontVar,
-  weight = "600",
-  tracking = "-0.025em",
-  lineHeight = "0.95",
-  italic = false,
-  caps = false,
-  size = "large",
-}: {
+// ─── Variant definition ────────────────────────────────────────────────────
+type Variant = {
+  group: string
+  n: number
+  name: string
+  tag?: string
   fontVar: string
-  weight?: string
-  tracking?: string
-  lineHeight?: string
-  italic?: boolean
+  weight: string
+  tracking: string
+  lineHeight: string
   caps?: boolean
   size?: "large" | "contained"
-}) {
+  note: string
+}
+
+const VARIANTS: Variant[] = [
+
+  // ── Grupo A — Referência ─────────────────────────────────────────────────
+  {
+    group: "A", n: 1,
+    name: "Playfair Display 700",
+    tag: "atual",
+    fontVar: "--font-playfair",
+    weight: "700", tracking: "-0.025em", lineHeight: "1.15",
+    note: "Referência actual. Dramático e funcional — mas com peso de revista de moda. Loud para o tom museu-editorial da DA.",
+  },
+
+  // ── Grupo B — Cormorant Garamond ─────────────────────────────────────────
+  {
+    group: "B", n: 1,
+    name: "Cormorant Garamond 600",
+    tag: "candidato",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "-0.025em", lineHeight: "0.95",
+    note: "Clássico, literário, elegante. Drama suficiente sem se tornar teatral. Melhor opção gratuita para o tom da DA.",
+  },
+  {
+    group: "B", n: 2,
+    name: "Cormorant Garamond 700",
+    fontVar: "--font-cormorant",
+    weight: "700", tracking: "-0.03em", lineHeight: "0.92",
+    note: "Um passo mais pesado que B1. Ainda refinado — começa a cruzar para território fashion. Comparar com B1 em mobile.",
+  },
+  {
+    group: "B", n: 3,
+    name: "Cormorant Garamond 600 · tracking muito fechado",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "-0.04em", lineHeight: "0.9",
+    note: "Tracking mais fechado que B1. Mais compacto, mais denso. Testa o limite de legibilidade em mobile.",
+  },
+  {
+    group: "B", n: 4,
+    name: "Cormorant Garamond 700 · tracking muito fechado",
+    fontVar: "--font-cormorant",
+    weight: "700", tracking: "-0.04em", lineHeight: "0.88",
+    note: "Peso 700 com tracking extremo. Máxima densidade para o Cormorant. Imponente em desktop, pode falhar em mobile.",
+  },
+  {
+    group: "B", n: 5,
+    name: "Cormorant Garamond 600 · linha aberta",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "-0.02em", lineHeight: "1.1",
+    note: "Line-height mais alto dá respiro entre linhas. Menos teatro, mais leitura. Pode funcionar melhor em frases com quebra de linha natural.",
+  },
+  {
+    group: "B", n: 6,
+    name: "Cormorant Garamond 600 · contido",
+    tag: "tamanho menor",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "-0.02em", lineHeight: "1.0",
+    size: "contained",
+    note: "Tamanho ~20% menor. Mais respiro, menos teatro. Expensive pela contenção — não pelo volume.",
+  },
+  {
+    group: "B", n: 7,
+    name: "Cormorant Garamond 700 · contido",
+    fontVar: "--font-cormorant",
+    weight: "700", tracking: "-0.025em", lineHeight: "0.95",
+    size: "contained",
+    note: "Peso 700 no tamanho contido. Equilíbrio entre presença e discrição. Candidato forte para páginas com mais conteúdo.",
+  },
+
+  // ── Grupo BC — Cormorant caps ─────────────────────────────────────────────
+  {
+    group: "BC", n: 1,
+    name: "Cormorant Garamond 600 · versalete",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "0.06em", lineHeight: "1.05",
+    caps: true,
+    note: "Evoca sinalética de museu. Funciona melhor com frases curtas — esta começa a ficar longa em caps.",
+  },
+  {
+    group: "BC", n: 2,
+    name: "Cormorant Garamond 700 · versalete",
+    fontVar: "--font-cormorant",
+    weight: "700", tracking: "0.04em", lineHeight: "1.0",
+    caps: true,
+    note: "Peso 700 em caps. Mais impacto, menor tracking. Mais próximo de um título de exposição do que uma citação.",
+  },
+  {
+    group: "BC", n: 3,
+    name: "Cormorant Garamond 600 · versalete largo",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "0.1em", lineHeight: "1.1",
+    caps: true,
+    note: "Tracking muito largo. Respira como mármores de galeria. Máximo requinte — mas exige frase muito curta.",
+  },
+
+  // ── Grupo P — Playfair Display ────────────────────────────────────────────
+  {
+    group: "P", n: 1,
+    name: "Playfair Display 600",
+    fontVar: "--font-playfair",
+    weight: "600", tracking: "-0.02em", lineHeight: "1.1",
+    note: "Um passo mais leve que A1. Menos agressivo — mas o Playfair com menos peso perde algum do impacto que é a sua razão de existir.",
+  },
+  {
+    group: "P", n: 2,
+    name: "Playfair Display 800",
+    fontVar: "--font-playfair",
+    weight: "800", tracking: "-0.03em", lineHeight: "1.05",
+    note: "Peso máximo do Playfair. Muito mais fashion/magazine. Útil para perceber onde está o teto desta família.",
+  },
+  {
+    group: "P", n: 3,
+    name: "Playfair Display 700 · contido",
+    fontVar: "--font-playfair",
+    weight: "700", tracking: "-0.025em", lineHeight: "1.15",
+    size: "contained",
+    note: "A1 no tamanho contido. O Playfair beneficia mais do que o Cormorant com a redução de tamanho — parece mais editorial.",
+  },
+  {
+    group: "P", n: 4,
+    name: "Playfair Display 600 · versalete",
+    fontVar: "--font-playfair",
+    weight: "600", tracking: "0.06em", lineHeight: "1.1",
+    caps: true,
+    note: "Playfair em caps é muito mais agressivo que o Cormorant. Útil como contraste para perceber porque o Cormorant aguenta melhor versalete.",
+  },
+  {
+    group: "P", n: 5,
+    name: "Playfair Display 700 · versalete",
+    fontVar: "--font-playfair",
+    weight: "700", tracking: "0.05em", lineHeight: "1.1",
+    caps: true,
+    note: "Versalete mais pesado. Chega perto de poster de cinema. O oposto do que a DA precisa — mas importante como referência do que evitar.",
+  },
+  {
+    group: "P", n: 6,
+    name: "Playfair Display 800 · versalete",
+    fontVar: "--font-playfair",
+    weight: "800", tracking: "0.04em", lineHeight: "1.05",
+    caps: true,
+    note: "Teto do Playfair em caps. Comparar com BC3 para ver a distância de tom entre as duas famílias.",
+  },
+
+  // ── Grupo EB — EB Garamond ────────────────────────────────────────────────
+  {
+    group: "EB", n: 1,
+    name: "EB Garamond 600",
+    fontVar: "--font-eb-garamond",
+    weight: "600", tracking: "-0.02em", lineHeight: "1.0",
+    note: "Mais sóbrio e académico que o Cormorant. Em display grande perde alguma personalidade — funciona melhor em tamanhos de texto corrido.",
+  },
+  {
+    group: "EB", n: 2,
+    name: "EB Garamond 700",
+    fontVar: "--font-eb-garamond",
+    weight: "700", tracking: "-0.025em", lineHeight: "0.95",
+    note: "Académico refinado ao peso 700. Boa opção se o objectivo for máxima seriedade sem ornamento. Menos impacto visual que o Cormorant.",
+  },
+  {
+    group: "EB", n: 3,
+    name: "EB Garamond 800",
+    fontVar: "--font-eb-garamond",
+    weight: "800", tracking: "-0.03em", lineHeight: "0.92",
+    note: "Peso máximo do EB Garamond. Ganha presença mas começa a afastar-se do tom académico — fica mais próximo de impacto editorial.",
+  },
+  {
+    group: "EB", n: 4,
+    name: "EB Garamond 700 · contido",
+    fontVar: "--font-eb-garamond",
+    weight: "700", tracking: "-0.02em", lineHeight: "1.0",
+    size: "contained",
+    note: "Tamanho contido. O EB Garamond beneficia desta redução — parece mais museu, menos display advertising.",
+  },
+  {
+    group: "EB", n: 5,
+    name: "EB Garamond 600 · versalete",
+    fontVar: "--font-eb-garamond",
+    weight: "600", tracking: "0.06em", lineHeight: "1.05",
+    caps: true,
+    note: "EB Garamond em versalete é mais sóbrio que o Cormorant — menos ornamento, mais seriedade. Bom para frases declarativas.",
+  },
+  {
+    group: "EB", n: 6,
+    name: "EB Garamond 700 · versalete",
+    fontVar: "--font-eb-garamond",
+    weight: "700", tracking: "0.05em", lineHeight: "1.0",
+    caps: true,
+    note: "Peso 700 em versalete. A combinação mais forte desta família para o componente. Comparar com BC2.",
+  },
+  {
+    group: "EB", n: 7,
+    name: "EB Garamond 800 · versalete",
+    fontVar: "--font-eb-garamond",
+    weight: "800", tracking: "0.04em", lineHeight: "0.98",
+    caps: true,
+    note: "Máximo peso em caps. Ganha impacto mas perde o tom académico que é o diferencial desta família.",
+  },
+
+  // ── Grupo F — Fraunces ────────────────────────────────────────────────────
+  {
+    group: "F", n: 1,
+    name: "Fraunces 600",
+    fontVar: "--font-fraunces",
+    weight: "600", tracking: "-0.02em", lineHeight: "0.98",
+    note: "Distinto, com personalidade forte. Mais contemporâneo e humano que o Cormorant. Pode funcionar se a DA quiser diferenciar-se de galerias tradicionais.",
+  },
+  {
+    group: "F", n: 2,
+    name: "Fraunces 700",
+    tag: "candidato",
+    fontVar: "--font-fraunces",
+    weight: "700", tracking: "-0.025em", lineHeight: "0.95",
+    note: "Ao peso 700 ganha presença sem perder a personalidade. O mais distinto de todos os candidatos.",
+  },
+  {
+    group: "F", n: 3,
+    name: "Fraunces 800",
+    fontVar: "--font-fraunces",
+    weight: "800", tracking: "-0.03em", lineHeight: "0.92",
+    note: "Peso máximo. Muito impacto — começa a tornar-se exuberante para o tom da DA. Útil como limite superior.",
+  },
+  {
+    group: "F", n: 4,
+    name: "Fraunces 600 · contido",
+    fontVar: "--font-fraunces",
+    weight: "600", tracking: "-0.02em", lineHeight: "1.0",
+    size: "contained",
+    note: "O tamanho contido serve muito bem o Fraunces — a personalidade da fonte mantém-se sem dominar.",
+  },
+  {
+    group: "F", n: 5,
+    name: "Fraunces 700 · contido",
+    fontVar: "--font-fraunces",
+    weight: "700", tracking: "-0.025em", lineHeight: "0.95",
+    size: "contained",
+    note: "Candidato forte no tamanho contido. Equilíbrio entre presença e discrição.",
+  },
+  {
+    group: "F", n: 6,
+    name: "Fraunces 600 · versalete",
+    fontVar: "--font-fraunces",
+    weight: "600", tracking: "0.07em", lineHeight: "1.05",
+    caps: true,
+    note: "Fraunces em versalete tem menos naturalidade que o Cormorant — a fonte foi desenhada para texto corrido e display, não para caps.",
+  },
+  {
+    group: "F", n: 7,
+    name: "Fraunces 700 · versalete",
+    fontVar: "--font-fraunces",
+    weight: "700", tracking: "0.05em", lineHeight: "1.0",
+    caps: true,
+    note: "Caps mais pesado. Perde ainda mais a personalidade característica do Fraunces. Comparar com BC2 e EB6.",
+  },
+
+  // ── Grupo LB — Libre Baskerville ─────────────────────────────────────────
+  {
+    group: "LB", n: 1,
+    name: "Libre Baskerville 700",
+    fontVar: "--font-libre-baskerville",
+    weight: "700", tracking: "-0.015em", lineHeight: "1.05",
+    note: "Sólida, confiável, legível. Em display grande parece mais jornal de qualidade do que galeria de arte. Referência para perceber o que falta aos outros.",
+  },
+  {
+    group: "LB", n: 2,
+    name: "Libre Baskerville 700 · contido",
+    fontVar: "--font-libre-baskerville",
+    weight: "700", tracking: "-0.015em", lineHeight: "1.05",
+    size: "contained",
+    note: "O tamanho contido não resolve o problema fundamental do Baskerville — parece sempre mais newspaper do que museu.",
+  },
+  {
+    group: "LB", n: 3,
+    name: "Libre Baskerville 700 · versalete",
+    fontVar: "--font-libre-baskerville",
+    weight: "700", tracking: "0.05em", lineHeight: "1.1",
+    caps: true,
+    note: "Em caps o Baskerville aproxima-se mais do tom desejado — perde algum do carácter newspaper. Mas o Cormorant ainda ganha nesta dimensão.",
+  },
+
+  // ── Grupo X — Tracking e line-height extremos ─────────────────────────────
+  {
+    group: "X", n: 1,
+    name: "Cormorant Garamond 600 · linha muito fechada",
+    fontVar: "--font-cormorant",
+    weight: "600", tracking: "-0.025em", lineHeight: "0.85",
+    note: "Line-height extremamente fechado. As linhas quase se tocam. Pode funcionar como efeito visual deliberado — testa o limite.",
+  },
+  {
+    group: "X", n: 2,
+    name: "Playfair Display 700 · linha muito fechada",
+    fontVar: "--font-playfair",
+    weight: "700", tracking: "-0.025em", lineHeight: "0.9",
+    note: "Playfair com linha fechada. A presença das serifas torna o empilhamento mais arriscado que no Cormorant.",
+  },
+  {
+    group: "X", n: 3,
+    name: "EB Garamond 800 · tracking muito fechado",
+    fontVar: "--font-eb-garamond",
+    weight: "800", tracking: "-0.035em", lineHeight: "0.92",
+    note: "Peso máximo com tracking muito fechado. Densidade máxima para esta família. Testa se o EB Garamond aguenta o extremo.",
+  },
+  {
+    group: "X", n: 4,
+    name: "Cormorant Garamond 700 · tracking aberto",
+    fontVar: "--font-cormorant",
+    weight: "700", tracking: "-0.01em", lineHeight: "1.0",
+    note: "Tracking intencionalmente menos fechado. O Cormorant 700 respira mais — perde densidade mas ganha clareza em mobile.",
+  },
+]
+
+// ─── Pullquote shell ───────────────────────────────────────────────────────
+function PullquoteShell({ v }: { v: Variant }) {
   const sizeClasses =
-    size === "contained"
+    v.size === "contained"
       ? "text-[22px] sm:text-[28px] md:text-[36px] lg:text-[44px]"
       : "text-[26px] sm:text-[34px] md:text-[44px] lg:text-[52px]"
 
-  const displayText = caps ? QUOTE_CAPS.toUpperCase() : `\u201c${QUOTE}\u201d`
+  const displayText = v.caps ? QUOTE.toUpperCase() : QUOTE
 
   return (
     <figure
-      className="my-12 md:my-18"
+      className="my-10 md:my-14"
       style={{
         marginLeft: "calc(-50vw + 50%)",
         marginRight: "calc(-50vw + 50%)",
@@ -65,19 +367,18 @@ function PullquoteShell({
         style={{
           background: "oklch(0.30 0.06 250)",
           transform: "skewY(-2deg)",
-          padding: size === "contained" ? "4rem 1.5rem" : "3.5rem 1.5rem",
+          padding: v.size === "contained" ? "4rem 1.5rem" : "3.5rem 1.5rem",
         }}
       >
         <blockquote style={{ transform: "skewY(2deg)" }}>
           <p
-            className={`${sizeClasses} text-white max-w-5xl mx-auto px-2 sm:px-8 md:px-16`}
+            className={`${sizeClasses} text-white max-w-5xl mx-auto px-2 sm:px-8 md:px-16 text-center`}
             style={{
-              fontFamily: `var(${fontVar})`,
-              fontWeight: weight,
-              letterSpacing: tracking,
-              lineHeight,
-              fontStyle: italic ? "italic" : "normal",
-              textTransform: caps ? "uppercase" : "none",
+              fontFamily: `var(${v.fontVar})`,
+              fontWeight: v.weight,
+              letterSpacing: v.tracking,
+              lineHeight: v.lineHeight,
+              textTransform: v.caps ? "uppercase" : "none",
             }}
           >
             {displayText}
@@ -88,62 +389,27 @@ function PullquoteShell({
   )
 }
 
-// ─── Spec block ────────────────────────────────────────────────────────────
-function Spec({
-  items,
-  note,
-}: {
-  items: [string, string][]
-  note: string
-}) {
+// ─── Spec row ──────────────────────────────────────────────────────────────
+function Spec({ v }: { v: Variant }) {
+  const rows: [string, string][] = [
+    ["font-family", v.fontVar.replace("--font-", "").replace(/-/g, " ")],
+    ["font-weight", v.weight],
+    ["letter-spacing", v.tracking],
+    ["line-height", v.lineHeight],
+    ["text-transform", v.caps ? "uppercase" : "none"],
+    ["size", v.size === "contained" ? "contained (~20% menor)" : "large (padrão)"],
+  ]
   return (
-    <div className="my-6 border-l-2 border-brand-gold/25 pl-5 flex flex-col gap-0.5">
-      <div className="grid grid-cols-[140px_1fr] gap-x-3 mb-2">
-        {items.map(([k, v], i) => (
+    <div className="my-5 border-l-2 border-brand-gold/20 pl-5">
+      <div className="grid grid-cols-[130px_1fr] gap-x-3 mb-3">
+        {rows.map(([k, val]) => (
           <>
-            <span key={`k${i}`} className="text-[11px] font-mono text-slate-300">{k}</span>
-            <span key={`v${i}`} className="text-[11px] font-mono text-slate-500">{v}</span>
+            <span key={`k-${k}`} className="text-[10px] font-mono text-slate-300 leading-5">{k}</span>
+            <span key={`v-${k}`} className="text-[10px] font-mono text-slate-400 leading-5">{val}</span>
           </>
         ))}
       </div>
-      <p className="text-[12px] text-slate-400 italic leading-5 mt-1">{note}</p>
-    </div>
-  )
-}
-
-// ─── Variant header ────────────────────────────────────────────────────────
-function VariantHeader({
-  group,
-  n,
-  name,
-  tag,
-}: {
-  group: string
-  n: number
-  name: string
-  tag?: string
-}) {
-  return (
-    <div className="mt-20 mb-5">
-      <div className="flex items-center gap-2 mb-2">
-        <span className="text-[8px] font-medium uppercase tracking-[0.22em] text-slate-300">
-          {group}
-        </span>
-        <span className="text-[8px] text-slate-200">·</span>
-        <span className="text-[8px] font-medium uppercase tracking-[0.22em] text-slate-300">
-          {n}
-        </span>
-      </div>
-      <div className="flex items-baseline gap-3 flex-wrap">
-        <h2 className="font-serif text-[21px] md:text-[25px] text-brand-navy tracking-[-0.02em]">
-          {name}
-        </h2>
-        {tag && (
-          <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-brand-gold/70 border border-brand-gold/20 rounded-full px-2 py-0.5">
-            {tag}
-          </span>
-        )}
-      </div>
+      <p className="text-[12px] text-slate-400 leading-5 italic">{v.note}</p>
     </div>
   )
 }
@@ -151,9 +417,9 @@ function VariantHeader({
 // ─── Group divider ─────────────────────────────────────────────────────────
 function GroupDivider({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-4 mt-24 mb-2 mx-auto max-w-[700px] px-5 md:px-8">
+    <div className="flex items-center gap-4 mt-20 mb-2 mx-auto max-w-[700px] px-5 md:px-8">
       <div className="h-px flex-1 bg-slate-100" />
-      <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-slate-300">
+      <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-slate-300 shrink-0">
         {label}
       </span>
       <div className="h-px flex-1 bg-slate-100" />
@@ -161,7 +427,21 @@ function GroupDivider({ label }: { label: string }) {
   )
 }
 
+// ─── Group map (for dividers) ──────────────────────────────────────────────
+const GROUP_LABELS: Record<string, string> = {
+  A:  "Grupo A — Referência",
+  B:  "Grupo B — Cormorant Garamond",
+  BC: "Grupo BC — Cormorant · versalete",
+  P:  "Grupo P — Playfair Display",
+  EB: "Grupo EB — EB Garamond",
+  F:  "Grupo F — Fraunces",
+  LB: "Grupo LB — Libre Baskerville",
+  X:  "Grupo X — Tracking e line-height extremos",
+}
+
 export default function TypeTestPullquotePage() {
+  let lastGroup = ""
+
   return (
     <div className="min-h-screen bg-white">
 
@@ -189,273 +469,65 @@ export default function TypeTestPullquotePage() {
           Qual fonte serve melhor o bloco de citação da DominionArts?
         </h1>
         <p className="text-[14px] sm:text-[15px] leading-7 text-slate-400">
-          Nove variantes cobrindo as decisões relevantes: fonte, peso, estilo
-          (normal · itálico), caixa (sentença · versalete) e tamanho. Pesos
-          abaixo de 600 excluídos — este é um componente de destaque. Cada
-          variante aparece dentro de conteúdo editorial real para que o
-          julgamento seja feito em contexto.
+          37 variantes cobrindo fonte, peso, versalete, tamanho, tracking e
+          line-height. Sem itálicos. Sem aspas. Texto centrado. Pesos abaixo
+          de 600 excluídos.
         </p>
       </header>
 
+      {/* ── Variants ────────────────────────────────────── */}
+      {VARIANTS.map((v, i) => {
+        const showDivider = v.group !== lastGroup
+        if (showDivider) lastGroup = v.group
 
-      {/* ════════════════════════════════════════════════════
-          GRUPO A — Referência
-      ════════════════════════════════════════════════════ */}
-      <GroupDivider label="Grupo A — Referência" />
+        return (
+          <div key={i}>
+            {showDivider && <GroupDivider label={GROUP_LABELS[v.group] ?? v.group} />}
 
-      {/* A1 — Playfair 700 normal */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="A" n={1} name="Playfair Display 700" tag="atual" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A}</p>
-      </div>
-      <PullquoteShell fontVar="--font-playfair" weight="700" tracking="-0.025em" lineHeight="1.15" />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Playfair Display"],
-            ["font-weight", "700"],
-            ["letter-spacing", "-0.025em"],
-            ["line-height", "1.15"],
-            ["font-style", "normal"],
-            ["text-transform", "none"],
-          ]}
-          note="Dramático e funcional — mas tem o peso de uma revista de moda. Pode tornar-se genérico. Loud para o tom museu-editorial da DominionArts."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
+            <div className="mx-auto max-w-[700px] px-5 md:px-8">
+              <div className="mt-12 mb-4">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-[8px] font-medium uppercase tracking-[0.22em] text-slate-300">
+                    {v.group}{v.n}
+                  </span>
+                  {v.tag && (
+                    <span className="text-[8px] font-medium uppercase tracking-[0.14em] text-brand-gold/70 border border-brand-gold/20 rounded-full px-2 py-0.5">
+                      {v.tag}
+                    </span>
+                  )}
+                </div>
+                <h2 className="font-serif text-[19px] md:text-[22px] text-brand-navy tracking-[-0.02em]">
+                  {v.name}
+                </h2>
+              </div>
+              <p className="text-[14px] leading-7 text-slate-500">{i % 2 === 0 ? BODY_A : BODY_B}</p>
+            </div>
 
+            <PullquoteShell v={v} />
 
-      {/* ════════════════════════════════════════════════════
-          GRUPO B — Cormorant Garamond (foco principal)
-      ════════════════════════════════════════════════════ */}
-      <GroupDivider label="Grupo B — Cormorant Garamond" />
-
-      {/* B1 — Cormorant 600 normal */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="B" n={1} name="Cormorant Garamond 600 · normal" tag="recomendado base" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A} {BODY_B}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="600" tracking="-0.025em" lineHeight="0.95" />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "600"],
-            ["letter-spacing", "-0.025em"],
-            ["line-height", "0.95"],
-            ["font-style", "normal"],
-            ["text-transform", "none"],
-          ]}
-          note="Clássico, literário, elegante. Drama suficiente sem se tornar teatral. Melhor opção gratuita para o tom da DA."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-      {/* B2 — Cormorant 700 normal */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="B" n={2} name="Cormorant Garamond 700 · normal" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="700" tracking="-0.03em" lineHeight="0.92" />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "700"],
-            ["letter-spacing", "-0.03em"],
-            ["line-height", "0.92"],
-            ["font-style", "normal"],
-            ["text-transform", "none"],
-          ]}
-          note="Um passo mais pesado que o 600. Ainda refinado, mas começa a cruzar para território fashion. Comparar com B1 em mobile."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-      {/* B3 — Cormorant 600 italic */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="B" n={3} name="Cormorant Garamond 600 · itálico" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A} {BODY_B}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="600" tracking="-0.025em" lineHeight="0.95" italic />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "600"],
-            ["letter-spacing", "-0.025em"],
-            ["line-height", "0.95"],
-            ["font-style", "italic"],
-            ["text-transform", "none"],
-          ]}
-          note="Muito literário e clássico. O itálico do Cormorant tem traços calígraficos genuínos — funciona bem com citações longas. Pode parecer demasiado delicado em mobile."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-      {/* B4 — Cormorant 700 italic */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="B" n={4} name="Cormorant Garamond 700 · itálico" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="700" tracking="-0.025em" lineHeight="0.93" italic />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "700"],
-            ["letter-spacing", "-0.025em"],
-            ["line-height", "0.93"],
-            ["font-style", "italic"],
-            ["text-transform", "none"],
-          ]}
-          note="Bold italic refinado. Combina presença com elegância histórica. Bom equilíbrio entre impacto e contenção. Candidato forte ao lado de B1."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-
-      {/* ════════════════════════════════════════════════════
-          GRUPO C — Versalete (caps)
-      ════════════════════════════════════════════════════ */}
-      <GroupDivider label="Grupo C — Versalete / All-caps" />
-
-      {/* C1 — Cormorant 600 caps */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="C" n={1} name="Cormorant Garamond 600 · versalete" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A} {BODY_B}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="600" tracking="0.06em" lineHeight="1.05" caps />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "600"],
-            ["letter-spacing", "0.06em"],
-            ["line-height", "1.05"],
-            ["font-style", "normal"],
-            ["text-transform", "uppercase"],
-          ]}
-          note="Evoca sinalética de museu ou mármores de galeria. Sem aspas — caps e aspas colidem. Poderoso mas exige que o texto da citação aguente a caixa alta. Funciona melhor com frases curtas."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-      {/* C2 — Playfair 700 caps */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="C" n={2} name="Playfair Display 700 · versalete" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A}</p>
-      </div>
-      <PullquoteShell fontVar="--font-playfair" weight="700" tracking="0.05em" lineHeight="1.1" caps />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Playfair Display"],
-            ["font-weight", "700"],
-            ["letter-spacing", "0.05em"],
-            ["line-height", "1.1"],
-            ["font-style", "normal"],
-            ["text-transform", "uppercase"],
-          ]}
-          note="Muito mais agressivo em caps do que o Cormorant. Chega perto de um poster de cinema. Útil como comparação para perceber que o Cormorant aguenta melhor a caixa alta."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-
-      {/* ════════════════════════════════════════════════════
-          GRUPO D — Tamanho contido
-      ════════════════════════════════════════════════════ */}
-      <GroupDivider label="Grupo D — Tamanho contido" />
-
-      {/* D1 — Cormorant 600 contained */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="D" n={1} name="Cormorant Garamond 600 · tamanho contido" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A} {BODY_B}</p>
-      </div>
-      <PullquoteShell fontVar="--font-cormorant" weight="600" tracking="-0.02em" lineHeight="1.0" size="contained" />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Cormorant Garamond"],
-            ["font-weight", "600"],
-            ["letter-spacing", "-0.02em"],
-            ["line-height", "1.0"],
-            ["font-style", "normal"],
-            ["text-transform", "none"],
-          ]}
-          note="Tamanho reduzido (~20% menor). Mais espaço de respiro, menos teatro. Compara com B1: qual parece mais expensive? Pode ser a resposta certa para mobile."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-
-      {/* ════════════════════════════════════════════════════
-          GRUPO E — Alternativas
-      ════════════════════════════════════════════════════ */}
-      <GroupDivider label="Grupo E — Alternativas" />
-
-      {/* E1 — EB Garamond 700 italic */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="E" n={1} name="EB Garamond 700 · itálico" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A} {BODY_B}</p>
-      </div>
-      <PullquoteShell fontVar="--font-eb-garamond" weight="700" tracking="-0.02em" lineHeight="1.0" italic />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "EB Garamond"],
-            ["font-weight", "700"],
-            ["letter-spacing", "-0.02em"],
-            ["line-height", "1.0"],
-            ["font-style", "italic"],
-            ["text-transform", "none"],
-          ]}
-          note="Académico e refinado. O itálico do EB Garamond é mais sóbrio que o do Cormorant — menos ornamento, mais seriedade. Boa opção se o tom virar mais intelectual/museu do que literário."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_C}</p>
-      </div>
-
-      {/* E2 — Fraunces 700 normal */}
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <VariantHeader group="E" n={2} name="Fraunces 700 · normal" />
-        <p className="text-[15px] leading-7 text-slate-600 mb-1">{BODY_A}</p>
-      </div>
-      <PullquoteShell fontVar="--font-fraunces" weight="700" tracking="-0.025em" lineHeight="0.95" />
-      <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <Spec
-          items={[
-            ["font-family", "Fraunces"],
-            ["font-weight", "700"],
-            ["letter-spacing", "-0.025em"],
-            ["line-height", "0.95"],
-            ["font-style", "normal"],
-            ["text-transform", "none"],
-          ]}
-          note="Distinto e com personalidade forte. Ao peso 700 tem impacto sem ser thin. Mais contemporâneo e humano — menos clássico que o Cormorant. Pode funcionar se a DA quiser diferenciar-se de galerias tradicionais."
-        />
-        <p className="text-[15px] leading-7 text-slate-600 mb-8">{BODY_C}</p>
-      </div>
-
+            <div className="mx-auto max-w-[700px] px-5 md:px-8">
+              <Spec v={v} />
+              <p className="text-[14px] leading-7 text-slate-500 pb-2">{i % 2 === 0 ? BODY_B : BODY_A}</p>
+            </div>
+          </div>
+        )
+      })}
 
       {/* ── Verdict ─────────────────────────────────────── */}
       <div className="mx-auto max-w-[700px] px-5 md:px-8">
-        <div className="border-t border-slate-100 pt-10 pb-20">
+        <div className="border-t border-slate-100 mt-16 pt-10 pb-20">
           <p className="text-[9px] uppercase tracking-[0.22em] text-brand-gold mb-4">
             Veredito de trabalho
           </p>
           <p className="font-serif text-[20px] md:text-[24px] text-brand-navy tracking-[-0.015em] leading-[1.3] mb-4">
-            Candidatos finais: B1 (600 normal) e B4 (700 itálico).
+            Candidatos finais: B1, B7, BC1.
           </p>
           <p className="text-[14px] leading-7 text-slate-500 mb-6">
-            Ambos mantêm a contenção que define o tom da DominionArts. B1 é
-            mais contemporâneo e seguro; B4 é mais histórico e dramático. A
-            decisão depende de onde o componente vai aparecer com mais
-            frequência: artigos longos pedem B1, páginas manifesto pedem B4.
-            Versalete (C1) fica reservado para frases muito curtas.
+            B1 (Cormorant 600, standard) para artigos. B7 (Cormorant 700 contido)
+            para páginas manifesto. BC1 (versalete) reservado para frases muito curtas.
           </p>
           <p className="text-[13px] text-slate-400 leading-6">
-            A escolha aplica-se a:{" "}
+            Aplica-se a:{" "}
             {[
               "v5/[slug]/page.tsx",
               "foundational/v5/page.tsx",
@@ -463,9 +535,7 @@ export default function TypeTestPullquotePage() {
               "instagram/v6/page.tsx",
             ].map((f, i, arr) => (
               <span key={f}>
-                <code className="text-[11px] bg-slate-50 px-1.5 py-0.5 rounded text-slate-400">
-                  {f}
-                </code>
+                <code className="text-[11px] bg-slate-50 px-1.5 py-0.5 rounded text-slate-400">{f}</code>
                 {i < arr.length - 1 ? " · " : ""}
               </span>
             ))}
