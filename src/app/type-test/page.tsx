@@ -30,19 +30,19 @@ const ACTIVE: TestEntry[] = [
       "instagram/v6/page.tsx",
     ],
   },
-]
-
-const BACKLOG: TestEntry[] = [
   {
+    href: "/type-test/body-text",
     label: "Texto de corpo",
-    desc: "A tipografia mais lida no site. Fonte, tamanho (15–17px), entrelinha e peso afectam todos os artigos. Decisão de maior impacto depois dos títulos.",
-    status: "backlog",
-    priority: "alta",
+    desc: "A tipografia mais lida no site. Fonte, tamanho (14–18px), entrelinha e peso avaliados em excerto editorial completo — heading + 4 parágrafos.",
+    status: "em teste",
     locations: [
       "v5/[slug]/page.tsx",
       "foundational/v5/page.tsx",
     ],
   },
+]
+
+const BACKLOG: TestEntry[] = [
   {
     label: "Título de artigo (h1)",
     desc: "O título principal de cada post. Display type em grande — reage de forma diferente ao pullquote mesmo usando a mesma família. Testar escala, peso e tracking.",
