@@ -211,6 +211,8 @@ function TypeTestInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
+  const allFontIds = FONTS.map((f) => f.id)
+
   const [settings, setSettings] = useState<Settings>(() => ({
     weight:   (searchParams.get("weight")   as Weight) || DEFAULTS.weight,
     size:     (searchParams.get("size")     as Size)   || DEFAULTS.size,
@@ -219,6 +221,12 @@ function TypeTestInner() {
     lineH:    searchParams.get("lineH")                || DEFAULTS.lineH,
   }))
 
+  const [activeFonts, setActiveFonts] = useState<Set<string>>(() => {
+    const param = searchParams.get("fonts")
+    if (param) return new Set(param.split(",").filter((id) => allFontIds.includes(id)))
+    return new Set(allFontIds)
+  })
+
   useEffect(() => {
     const params = new URLSearchParams({
       weight:   settings.weight,
@@ -226,16 +234,27 @@ function TypeTestInner() {
       case:     settings.textCase,
       tracking: settings.tracking,
       lineH:    settings.lineH,
+      fonts:    [...activeFonts].join(","),
     })
     router.replace(`?${params.toString()}`, { scroll: false })
-  }, [settings, router])
+  }, [settings, activeFonts, router])
 
   function set<K extends keyof Settings>(key: K, val: Settings[K]) {
     setSettings((s) => ({ ...s, [key]: val }))
   }
 
+  function toggleFont(id: string) {
+    setActiveFonts((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
   const serifs    = FONTS.filter((f) => f.serif)
   const sansSerif = FONTS.filter((f) => !f.serif)
+  const activeSerifs    = serifs.filter((f) => activeFonts.has(f.id))
+  const activeSansSerif = sansSerif.filter((f) => activeFonts.has(f.id))
 
   return (
     <div className="min-h-screen bg-white">
@@ -326,31 +345,55 @@ function TypeTestInner() {
           em JSON.
         </p>
 
-        {/* ── Jump index ──────────────────────────────── */}
+        {/* ── Font index / toggle ─────────────────────── */}
         <nav>
-          <p className="text-[8px] font-medium uppercase tracking-[0.2em] text-slate-300 mb-3">Serifadas</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-5">
-            {serifs.map((f) => (
-              <a
-                key={f.id}
-                href={`#${f.id}`}
-                className="text-[12px] text-slate-400 hover:text-brand-navy transition-colors"
-              >
-                {f.label}
-              </a>
-            ))}
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-[8px] font-medium uppercase tracking-[0.2em] text-slate-300">Serifadas</p>
+            <div className="flex gap-2">
+              <button onClick={() => setActiveFonts(new Set(allFontIds))} className="text-[9px] text-slate-300 hover:text-brand-navy transition-colors">Todas</button>
+              <span className="text-slate-200 text-[9px]">·</span>
+              <button onClick={() => setActiveFonts(new Set())} className="text-[9px] text-slate-300 hover:text-brand-navy transition-colors">Nenhuma</button>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-5">
+            {serifs.map((f) => {
+              const active = activeFonts.has(f.id)
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => toggleFont(f.id)}
+                  className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-all ${
+                    active
+                      ? "bg-brand-navy text-white border-brand-navy"
+                      : "text-slate-300 border-slate-200 hover:border-slate-300 hover:text-slate-400 line-through decoration-slate-300"
+                  }`}
+                >
+                  {active && (
+                    <a href={`#${f.id}`} onClick={(e) => e.stopPropagation()} className="after:content-['↓'] after:ml-1 after:text-[9px] after:opacity-40" />
+                  )}
+                  {f.label}
+                </button>
+              )
+            })}
           </div>
           <p className="text-[8px] font-medium uppercase tracking-[0.2em] text-slate-300 mb-3">Sem serifa</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-            {sansSerif.map((f) => (
-              <a
-                key={f.id}
-                href={`#${f.id}`}
-                className="text-[12px] text-slate-400 hover:text-brand-navy transition-colors"
-              >
-                {f.label}
-              </a>
-            ))}
+          <div className="flex flex-wrap gap-2">
+            {sansSerif.map((f) => {
+              const active = activeFonts.has(f.id)
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => toggleFont(f.id)}
+                  className={`text-[11px] font-medium px-3 py-1 rounded-full border transition-all ${
+                    active
+                      ? "bg-brand-navy text-white border-brand-navy"
+                      : "text-slate-300 border-slate-200 hover:border-slate-300 hover:text-slate-400 line-through decoration-slate-300"
+                  }`}
+                >
+                  {f.label}
+                </button>
+              )
+            })}
           </div>
         </nav>
       </header>
@@ -363,7 +406,10 @@ function TypeTestInner() {
         </div>
       </div>
 
-      {serifs.map((font, i) => (
+      {activeSerifs.length === 0 && (
+        <p className="mx-auto max-w-[700px] px-5 md:px-8 mt-8 text-[13px] text-slate-300 italic">Nenhuma fonte serifada seleccionada.</p>
+      )}
+      {activeSerifs.map((font, i) => (
         <div key={font.id} id={font.id}>
           <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-12 mb-1">
             <div className="flex items-baseline gap-3 flex-wrap mb-3">
@@ -383,7 +429,7 @@ function TypeTestInner() {
             <CopyButton font={font} settings={settings} />
           </div>
 
-          {i < serifs.length - 1 && (
+          {i < activeSerifs.length - 1 && (
             <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-10">
               <div className="h-px bg-slate-100" />
             </div>
@@ -399,7 +445,10 @@ function TypeTestInner() {
         </div>
       </div>
 
-      {sansSerif.map((font, i) => (
+      {activeSansSerif.length === 0 && (
+        <p className="mx-auto max-w-[700px] px-5 md:px-8 mt-8 text-[13px] text-slate-300 italic">Nenhuma fonte sem serifa seleccionada.</p>
+      )}
+      {activeSansSerif.map((font, i) => (
         <div key={font.id} id={font.id}>
           <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-12 mb-1">
             <div className="flex items-baseline gap-3 flex-wrap mb-3">
@@ -416,7 +465,7 @@ function TypeTestInner() {
             <CopyButton font={font} settings={settings} />
           </div>
 
-          {i < sansSerif.length - 1 && (
+          {i < activeSansSerif.length - 1 && (
             <div className="mx-auto max-w-[700px] px-5 md:px-8 mt-10">
               <div className="h-px bg-slate-100" />
             </div>
