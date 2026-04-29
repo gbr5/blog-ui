@@ -22,7 +22,7 @@ type Weight    = "600" | "700" | "800"
 type Size      = "large" | "contained"
 type Caps      = false | true
 type Tracking  = "tight" | "normal" | "open"
-type LineH     = "tight" | "normal" | "open"
+type LineH     = "0.82" | "0.88" | "0.92" | "0.95" | "1.0" | "1.1" | "1.2" | "1.35"
 
 interface Settings {
   weight:    Weight
@@ -77,11 +77,7 @@ const TRACKING_MAP: Record<"sentence" | "caps", Record<Tracking, string>> = {
   sentence: { tight: "-0.04em",  normal: "-0.025em", open: "-0.01em" },
   caps:     { tight:  "0.04em",  normal:  "0.06em",  open:  "0.1em"  },
 }
-const LINE_H_MAP: Record<LineH, string> = {
-  tight:  "0.88",
-  normal: "0.95",
-  open:   "1.1",
-}
+const LINE_H_VALUES: LineH[] = ["0.82", "0.88", "0.92", "0.95", "1.0", "1.1", "1.2", "1.35"]
 
 const QUOTE = "A beleza que dura não é perfeição — é autenticidade."
 
@@ -101,7 +97,7 @@ function Pullquote({
   const weight      = String(Math.min(parseInt(settings.weight), maxWeight))
   const trackingKey = settings.caps ? "caps" : "sentence"
   const tracking    = TRACKING_MAP[trackingKey][settings.tracking]
-  const lineHeight  = LINE_H_MAP[settings.lineH]
+  const lineHeight  = settings.lineH
   const displayText = settings.caps ? QUOTE.toUpperCase() : QUOTE
 
   const sizeClasses = settings.size === "contained"
@@ -181,7 +177,7 @@ export default function TypeTestPullquotePage() {
     size:     "large",
     caps:     false,
     tracking: "normal",
-    lineH:    "normal",
+    lineH:    "0.95",
   })
 
   function set<K extends keyof Settings>(key: K, val: Settings[K]) {
@@ -261,11 +257,7 @@ export default function TypeTestPullquotePage() {
               label="Linha"
               value={settings.lineH}
               onChange={(v) => set("lineH", v)}
-              options={[
-                { label: "Fechada", value: "tight" as LineH },
-                { label: "Normal",  value: "normal" as LineH },
-                { label: "Aberta",  value: "open" as LineH },
-              ]}
+              options={LINE_H_VALUES.map((v) => ({ label: v, value: v }))}
             />
 
           </div>
